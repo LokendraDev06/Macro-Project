@@ -1,0 +1,21 @@
+symptoms,disease,recommended_specialist,severity,is_emergency
+"chest pain, shortness of breath, left arm pain",Heart Attack,Cardiologist,High,True
+"chest tightness, palpitations, dizziness",Angina / Arrhythmia,Cardiologist,High,True
+"persistent cough, fever, fatigue, chills",Pneumonia / Bronchitis,Pulmonologist,Medium,False
+"wheezing, shortness of breath, chest tightness",Asthma,Pulmonologist,Medium,False
+"severe headache, nausea, sensitivity to light",Migraine,Neurologist,Medium,False
+"numbness in face, sudden weakness in arm, slurred speech",Stroke,Neurologist,High,True
+"skin rash, itching, redness, hives",Allergic Dermatitis,Dermatologist,Low,False
+"acne, facial redness, skin lesion",Dermatitis,Dermatologist,Low,False
+"joint pain, swelling, morning stiffness",Rheumatoid Arthritis,Rheumatologist,Medium,False
+"knee pain, difficulty walking, joint popping",Osteoarthritis,Orthopedist,Medium,False
+"frequent urination, excessive thirst, sudden weight loss",Diabetes Mellitus,Endocrinologist,Medium,False
+"fatigue, weight gain, cold intolerance, dry skin",Hypothyroidism,Endocrinologist,Low,False
+"stomach pain, acid reflux, heartburn, bloating",GERD / Gastritis,Gastroenterologist,Low,False
+"severe abdominal pain, vomiting, fever",Appendicitis,General Surgeon,High,True
+"blurry vision, eye pain, redness, watering eyes",Conjunctivitis / Glaucoma,Ophthalmologist,Medium,False
+"ear pain, hearing loss, tinnitus, dizziness",Otitis Media / Inner Ear Infection,ENT Specialist,Low,False
+"sore throat, difficulty swallowing, swollen tonsils",Tonsillitis,ENT Specialist,Low,False
+"anxiety, panic attacks, persistent sadness, insomnia",Depression / Anxiety Disorder,Psychiatrist,Medium,False
+"lower back pain, radiation to leg, numbness",Sciatica / Disc Herniation,Neurologist / Orthopedist,Medium,False
+"painful urination, fever, lower abdominal pain",Urinary Tract Infection (UTI),Urologist,Medium,False

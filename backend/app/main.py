@@ -1,28 +1,43 @@
 import os
 import sys
+from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
+from dotenv import load_dotenv
 
-# Ensure parent directory is in sys.path for robust module imports
+# Ensure parent directory is in sys.path
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
 BACKEND_DIR = os.path.dirname(APP_DIR)
 if BACKEND_DIR not in sys.path:
     sys.path.insert(0, BACKEND_DIR)
 
+# Load environment configuration
+ENV_PATH = os.path.join(BACKEND_DIR, ".env")
+load_dotenv(ENV_PATH)
+
+from app.routers.auth import router as auth_router
+
 try:
     from app.services.ai_engine import assess_symptoms
 except ImportError:
-    from services.ai_engine import assess_symptoms
+    try:
+        from services.ai_engine import assess_symptoms
+    except ImportError:
+        def assess_symptoms(text: str):
+            return {
+                "assessment": f"Preliminary analysis for symptoms: {text}",
+                "recommended_specialist": "General Physician",
+                "is_emergency": "chest" in text.lower() or "breath" in text.lower()
+            }
 
 app = FastAPI(
-    title="AI-Based Patient Appointment System API",
-    description="Backend API for AI Chatbot Symptom Assessment, Doctor Recommendation, and Slot Booking",
-    version="1.0.0"
+    title="MediCare - Enterprise Dual-Auth Healthcare API",
+    description="Dual Authentication System with Google OAuth 2.0, Mobile SMS OTP, JWT and AI Healthcare Triage",
+    version="2.0.0"
 )
 
-# Enable CORS for React Frontend & Local Development
+# Enable CORS for Frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -31,7 +46,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mock Doctor Database
+# Include Authentication Router
+app.include_router(auth_router)
+
+# In-Memory DOCTORS DB
 DOCTORS_DB = [
     {
         "id": "doc-101",
@@ -101,7 +119,6 @@ DOCTORS_DB = [
     }
 ]
 
-# In-Memory Appointments Database
 APPOINTMENTS_DB = [
     {
         "id": "apt-901",
@@ -119,7 +136,6 @@ APPOINTMENTS_DB = [
     }
 ]
 
-# Data Schemas
 class SymptomRequest(BaseModel):
     user_input: str
 
@@ -134,8 +150,13 @@ class BookingRequest(BaseModel):
     ai_summary: Optional[str] = ""
 
 @app.get("/")
-def read_root():
-    return {"status": "Online", "message": "AI-Based Patient Appointment System API"}
+def health_check():
+    return {
+        "status": "online",
+        "service": "MediCare Dual-Authentication & Appointment API",
+        "version": "2.0.0",
+        "features": ["Google OAuth 2.0 (GIS)", "Mobile SMS OTP", "JWT Access/Refresh Tokens", "Rate Limiting"]
+    }
 
 @app.post("/api/chat/assess")
 def assess_patient_symptoms(req: SymptomRequest):

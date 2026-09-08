@@ -3,119 +3,331 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediCare - Doctor Patient Appointment System</title>
+  <title>MediCare - AI Powered Doctor-Patient Appointment Portal</title>
+  
   <!-- React & ReactDOM CDN -->
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <!-- Babel Compiler -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Google Fonts -->
+  
+  <!-- Official Google Identity Services (GSI) Library -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-      --bg-gradient: linear-gradient(135deg, #eef2ff 0%, #e0f2fe 50%, #eff6ff 100%);
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --card-border: rgba(203, 213, 225, 0.8);
-      --primary-accent: #2563eb;
-      --primary-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      --doctor-accent: #0d9488;
-      --doctor-gradient: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
-      --secondary-accent: #059669;
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --emergency-bg: #fef2f2;
-      --emergency-border: #ef4444;
-      --emergency-text: #991b1b;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #60a5fa;
+      --primary-glow: rgba(37, 99, 235, 0.35);
+      --accent-teal: #0d9488;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --bg-dark: #090d16;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-border: rgba(226, 232, 240, 0.8);
+      --glass-shadow: 0 25px 60px -15px rgba(37, 99, 235, 0.18);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; width: 100%; font-family: var(--font-family); background: var(--bg-gradient); color: var(--text-main); overflow-x: hidden; }
-
-    .glass-panel {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      box-shadow: 0 10px 30px -10px rgba(14, 116, 144, 0.12);
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background: #f0f7ff;
+      color: var(--text-dark);
+      overflow-x: hidden;
     }
 
-    .btn-primary {
-      background: var(--primary-gradient);
-      color: #ffffff;
-      font-weight: 700;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.25s ease;
+    /* Dynamic Floating Mesh Background */
+    .bg-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      background: linear-gradient(135deg, #eef2ff 0%, #e0f2fe 40%, #f0fdf4 80%, #f8fafc 100%);
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.6;
+      animation: floatOrb 18s ease-in-out infinite alternate;
+    }
+
+    .orb-1 { width: 450px; height: 450px; background: #93c5fd; top: -100px; left: -100px; animation-duration: 22s; }
+    .orb-2 { width: 500px; height: 500px; background: #a7f3d0; bottom: -120px; left: 30%; animation-duration: 26s; animation-delay: -5s; }
+    .orb-3 { width: 400px; height: 400px; background: #c7d2fe; top: 15%; right: -80px; animation-duration: 20s; animation-delay: -10s; }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, 40px) scale(1.08); }
+      100% { transform: translate(-40px, 80px) scale(0.95); }
+    }
+
+    /* Wave animation */
+    .animated-waves {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 28vh;
+      min-height: 160px;
+      z-index: 1;
+      opacity: 0.85;
+    }
+
+    .wave-path-1 {
+      animation: waveDrift 14s ease-in-out infinite alternate;
+    }
+    .wave-path-2 {
+      animation: waveDrift 18s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes waveDrift {
+      0% { transform: translateX(0) scaleY(1); }
+      50% { transform: translateX(-3%) scaleY(1.06); }
+      100% { transform: translateX(2%) scaleY(0.96); }
+    }
+
+    /* Glassmorphism Card */
+    .glass-auth-card {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 28px;
+      padding: 34px 30px;
+      box-shadow: 0 25px 60px -12px rgba(37, 99, 235, 0.18), 0 0 0 1px rgba(226, 232, 240, 0.7);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-auth-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: rotate(25deg);
+      pointer-events: none;
+      animation: cardShine 8s infinite;
+    }
+
+    @keyframes cardShine {
+      0%, 80% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* Floating UI Badges */
+    .floating-badge {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 18px;
+      padding: 14px 18px;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.1);
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+      gap: 12px;
+      animation: floatBadge 6s ease-in-out infinite alternate;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+    @keyframes floatBadge {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-8px); }
     }
 
-    .btn-secondary {
-      background: #ffffff;
-      color: var(--text-main);
-      border: 1px solid var(--card-border);
-      font-weight: 600;
-      padding: 10px 18px;
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: pulseGreen 2s infinite;
+    }
+
+    @keyframes pulseGreen {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* Input with glowing animated border */
+    .glow-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #cbd5e1;
       border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      font-size: 0.92rem;
+      font-family: inherit;
+      color: #0f172a;
+      background: #ffffff;
+      outline: none;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .btn-secondary:hover { background: #f8fafc; border-color: var(--primary-accent); }
+    .glow-input:focus {
+      border-color: #2563eb;
+      background: #ffffff;
+      box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.15);
+      transform: translateY(-1px);
+    }
 
+    /* Interactive Buttons */
+    .btn-gradient-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.94rem;
+      padding: 13px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 22px rgba(37, 99, 235, 0.28);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-gradient-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.38);
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    }
+
+    .btn-gradient-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-gradient-primary:disabled {
+      background: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Modern Google Button */
+    .btn-google-signin {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #dadce0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #1f1f1f;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(60,64,67,0.08);
+      margin-bottom: 14px;
+      font-family: inherit;
+    }
+
+    .btn-google-signin:hover {
+      background: #f8fafd;
+      border-color: #0b57d0;
+      box-shadow: 0 4px 14px rgba(11, 87, 208, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .btn-google-signin:active {
+      transform: translateY(0);
+    }
+
+    /* 6-Digit OTP Box Grid */
+    .otp-digit-input {
+      width: 46px;
+      height: 52px;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 800;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      background: #ffffff;
+      color: #0f172a;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .otp-digit-input:focus {
+      border-color: #2563eb;
+      background: #eff6ff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      transform: scale(1.05);
+    }
+
+    .otp-digit-input.filled {
+      border-color: #2563eb;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    /* Shake Animation for Invalid OTP */
+    .shake-animation {
+      animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+      40%, 60% { transform: translate3d(3px, 0, 0); }
+    }
+
+    /* Navbar & Main App UI */
     .navbar {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 18px 40px; position: sticky; top: 0; z-index: 100;
-      background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px);
+      padding: 16px 40px; position: sticky; top: 0; z-index: 100;
+      background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--card-border);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     }
-
     .nav-links { display: flex; gap: 20px; align-items: center; }
     .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 600; cursor: pointer; transition: color 0.2s ease; }
-    .nav-link.active, .nav-link:hover { color: var(--primary-accent); }
-
+    .nav-link.active, .nav-link:hover { color: var(--primary); }
     .container { max-width: 1240px; margin: 0 auto; padding: 30px 20px; }
-
-    .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 40px 0; }
-    .hero-title { font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px; color: #0f172a; }
-    .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 28px; }
-
+    
     .chat-drawer {
       position: fixed; bottom: 30px; right: 30px; width: 420px; max-width: 90vw; height: 580px;
       z-index: 200; display: flex; flex-direction: column; border-radius: 20px; overflow: hidden;
-      box-shadow: 0 20px 40px rgba(14, 116, 144, 0.2);
+      box-shadow: 0 20px 40px rgba(14, 116, 144, 0.2); background: #ffffff;
+      border: 1px solid var(--card-border);
     }
-
     .chat-header { padding: 16px 20px; background: #ffffff; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; }
     .chat-body { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #f8fafc; }
     .chat-msg { padding: 12px 16px; border-radius: 14px; max-width: 85%; font-size: 0.92rem; line-height: 1.5; }
-    .chat-msg.bot { background: #ffffff; border: 1px solid var(--card-border); align-self: flex-start; color: var(--text-main); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .chat-msg.user { background: var(--primary-gradient); color: #ffffff; font-weight: 600; align-self: flex-end; }
-    .chat-msg.emergency { background: var(--emergency-bg); border: 1px solid var(--emergency-border); color: var(--emergency-text); }
+    .chat-msg.bot { background: #ffffff; border: 1px solid var(--card-border); align-self: flex-start; color: var(--text-dark); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .chat-msg.user { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-weight: 600; align-self: flex-end; }
     .chat-footer { padding: 12px; background: #ffffff; display: flex; gap: 8px; border-top: 1px solid var(--card-border); }
-
-    .chat-input { flex: 1; background: #f1f5f9; border: 1px solid var(--card-border); border-radius: 10px; padding: 10px 14px; color: var(--text-main); font-family: inherit; }
-    .chat-input:focus { outline: none; border-color: var(--primary-accent); background: #ffffff; }
-
+    
     .doctors-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; margin-top: 20px; }
-    .doctor-card { padding: 24px; display: flex; flex-direction: column; gap: 16px; background: #ffffff; transition: transform 0.25s ease, box-shadow 0.25s ease; }
-    .doctor-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(37, 99, 235, 0.15); border-color: var(--primary-accent); }
-    .doctor-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-accent); }
+    .doctor-card { padding: 24px; display: flex; flex-direction: column; gap: 16px; background: #ffffff; border-radius: 16px; border: 1px solid var(--card-border); transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .doctor-card:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(37, 99, 235, 0.12); border-color: var(--primary); }
+    .doctor-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
 
     .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(6px); z-index: 300; display: flex; align-items: center; justify-content: center; padding: 20px; }
     .modal-content { width: 100%; max-width: 520px; padding: 36px; background: #ffffff; border-radius: 24px; box-shadow: 0 20px 40px rgba(14, 116, 144, 0.15); }
@@ -126,6 +338,7 @@
 
   <script type="text/babel">
     const { useState, useEffect } = React;
+    const API_BASE = 'http://localhost:8000';
 
     const DOCTORS_DATA = [
       {
@@ -196,23 +409,27 @@
       }
     ];
 
-    // Custom 3D Vector Icons
-    const UserAvatar3DIcon = () => (
-      <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="36" r="20" fill="#ffffff" />
-        <path d="M20 82 C20 62 34 52 50 52 C66 52 80 62 80 82 Z" fill="#ffffff" />
+    // Crisp Vector Icons
+    const MedicalCrossLogo = () => (
+      <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 88 C20 65 8 45 8 28 C8 15 18 6 31 6 C40 6 46 11 50 16 C54 11 60 6 69 6 C82 6 92 15 92 28 C92 45 80 65 50 88 Z" stroke="#2563eb" strokeWidth="7" fill="#eff6ff" strokeLinejoin="round"/>
+        <rect x="45" y="24" width="10" height="24" rx="3" fill="#2563eb"/>
+        <rect x="38" y="31" width="24" height="10" rx="3" fill="#2563eb"/>
+        <circle cx="22" cy="72" r="7" stroke="#2563eb" strokeWidth="4" fill="#ffffff"/>
+        <circle cx="22" cy="72" r="3" fill="#2563eb"/>
+        <path d="M22 65 C22 55 26 48 30 48" stroke="#2563eb" strokeWidth="4" strokeLinecap="round" fill="none"/>
       </svg>
     );
 
     const PatientIconSVG = ({ active }) => (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={active ? "#ffffff" : "#475569"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={active ? "#ffffff" : "#475569"} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
         <circle cx="12" cy="7" r="4"></circle>
       </svg>
     );
 
     const DoctorIconSVG = ({ active }) => (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={active ? "#ffffff" : "#475569"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={active ? "#ffffff" : "#475569"} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 2v4M10 4h4"></path>
         <path d="M4 19v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"></path>
         <circle cx="12" cy="9" r="3"></circle>
@@ -220,15 +437,10 @@
       </svg>
     );
 
-    const PhoneOtpBadgeSVG = () => (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="2" width="14" height="20" rx="3" fill="#2563eb" />
-        <rect x="7" y="5" width="10" height="12" rx="1" fill="#ffffff" opacity="0.9" />
-        <rect x="9" y="7" width="2" height="2" rx="0.5" fill="#3b82f6" />
-        <rect x="13" y="7" width="2" height="2" rx="0.5" fill="#3b82f6" />
-        <rect x="9" y="10" width="2" height="2" rx="0.5" fill="#3b82f6" />
-        <rect x="13" y="10" width="2" height="2" rx="0.5" fill="#3b82f6" />
-        <circle cx="12" cy="19" r="1" fill="#ffffff" />
+    const ShieldSecurityIcon = () => (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        <path d="m9 12 2 2 4-4"></path>
       </svg>
     );
 
@@ -237,10 +449,20 @@
       const [activeTab, setActiveTab] = useState('home');
       const [isChatOpen, setIsChatOpen] = useState(false);
       
-      const [currentUser, setCurrentUser] = useState(null);
-      const [isLoggedIn, setIsLoggedIn] = useState(false);
+      // Auto-restore session from localStorage (e.g. from Google Auth)
+      const [currentUser, setCurrentUser] = useState(() => {
+        try {
+          const saved = localStorage.getItem('medicare_current_user');
+          return saved ? JSON.parse(saved) : null;
+        } catch (e) {
+          return null;
+        }
+      });
+      const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        return !!localStorage.getItem('medicare_current_user');
+      });
 
-      const [doctors] = useState(DOCTORS_DATA);
+      const [doctors, setDoctors] = useState(DOCTORS_DATA);
       const [selectedSpecialist, setSelectedSpecialist] = useState('');
       const [searchTerm, setSearchTerm] = useState('');
       const [selectedDoctor, setSelectedDoctor] = useState(null);
@@ -254,7 +476,7 @@
           date: "2026-08-28",
           slot: "11:30 AM",
           status: "Confirmed",
-          symptoms: "Chest tightness and occasional palpitations",
+          symptoms: "Chest tightness and palpitations",
           ai_summary: "Patient reports chest tightness & palpitations. Preliminary Assessment: Angina/Arrhythmia. Recommended Cardiologist."
         }
       ]);
@@ -269,7 +491,24 @@
         }
       };
 
+      // Listen for Google Auth Popup postMessage
+      useEffect(() => {
+        const handleAuthMessage = (event) => {
+          if (event.data && event.data.type === 'GOOGLE_AUTH_SUCCESS') {
+            const user = event.data.user;
+            if (user) {
+              handleLoginSuccess(user);
+            }
+          }
+        };
+        window.addEventListener('message', handleAuthMessage);
+        return () => window.removeEventListener('message', handleAuthMessage);
+      }, []);
+
       const handleLogout = () => {
+        localStorage.removeItem('medicare_access_token');
+        localStorage.removeItem('medicare_refresh_token');
+        localStorage.removeItem('medicare_current_user');
         setCurrentUser(null);
         setIsLoggedIn(false);
         setActiveTab('home');
@@ -290,27 +529,18 @@
         return matchSpec && matchSearch;
       });
 
-      // SCREEN 1: DIRECT MEDICARE LOGIN PAGE
       if (!isLoggedIn || !currentUser) {
-        return <MedicareAuthWidget onLogin={handleLoginSuccess} />;
+        return <DynamicAuthPortal onLogin={handleLoginSuccess} />;
       }
 
-      // SCREEN 2: LOGGED IN APPLICATION PORTAL
       return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           {/* Navbar */}
           <nav className="navbar">
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => setActiveTab('home')}>
-              <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 88 C20 65 8 45 8 28 C8 15 18 6 31 6 C40 6 46 11 50 16 C54 11 60 6 69 6 C82 6 92 15 92 28 C92 45 80 65 50 88 Z" stroke="#2563eb" strokeWidth="7" fill="none" strokeLinejoin="round"/>
-                <rect x="45" y="24" width="10" height="24" rx="3" fill="#2563eb"/>
-                <rect x="38" y="31" width="24" height="10" rx="3" fill="#2563eb"/>
-                <circle cx="22" cy="72" r="7" stroke="#2563eb" strokeWidth="4" fill="#ffffff"/>
-                <circle cx="22" cy="72" r="3" fill="#2563eb"/>
-                <path d="M22 65 C22 55 26 48 30 48" stroke="#2563eb" strokeWidth="4" strokeLinecap="round" fill="none"/>
-              </svg>
+              <MedicalCrossLogo />
               <div>
-                <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, color: '#1e3a8a' }}>MediCare</h2>
+                <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, color: '#1e3a8a', fontFamily: "'Outfit', sans-serif" }}>MediCare</h2>
                 <p style={{ fontSize: '0.75rem', color: '#3b82f6', fontWeight: 600 }}>Your Health, Our Priority</p>
               </div>
             </div>
@@ -320,64 +550,66 @@
               <span className={`nav-link ${activeTab === 'patient' ? 'active' : ''}`} onClick={() => setActiveTab('patient')}>👤 Patient Portal</span>
               <span className={`nav-link ${activeTab === 'doctor' ? 'active' : ''}`} onClick={() => setActiveTab('doctor')}>👨‍⚕️ Doctor Dashboard</span>
               
-              <button className="btn-primary" onClick={() => setIsChatOpen(true)}>🤖 AI Health Assistant</button>
+              <button className="btn-gradient-primary" style={{ width: 'auto', padding: '9px 18px' }} onClick={() => setIsChatOpen(true)}>🤖 AI Assistant</button>
 
-              {currentUser ? (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', paddingLeft: '10px', borderLeft: '1px solid var(--card-border)' }}>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>{currentUser.name}</div>
-                    <span style={{ fontSize: '0.72rem', color: currentUser.role === 'doctor' ? 'var(--doctor-accent)' : 'var(--primary-accent)', textTransform: 'capitalize', fontWeight: 700 }}>● {currentUser.role}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', paddingLeft: '10px', borderLeft: '1px solid var(--card-border)' }}>
+                {currentUser.avatar_url ? (
+                  <img src={currentUser.avatar_url} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #2563eb' }} alt="Avatar" />
+                ) : (
+                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#eff6ff', color: '#2563eb', border: '1.5px solid #bfdbfe', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.9rem' }}>
+                    {currentUser.name ? currentUser.name[0].toUpperCase() : 'U'}
                   </div>
-                  <button onClick={handleLogout} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>Logout</button>
+                )}
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>{currentUser.name}</div>
+                  <span style={{ fontSize: '0.72rem', color: '#2563eb', textTransform: 'capitalize', fontWeight: 700 }}>● {currentUser.role}</span>
                 </div>
-              ) : (
-                <button className="btn-secondary" onClick={() => setIsLoggedIn(false)}>🔑 Login / Sign Up</button>
-              )}
+                <button onClick={handleLogout} style={{ background: '#ffffff', border: '1px solid #cbd5e1', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600 }}>Logout</button>
+              </div>
             </div>
           </nav>
 
-          {/* Tab 1: Home / Doctor Finder */}
+          {/* Home View */}
           {activeTab === 'home' && (
             <div className="container" style={{ flex: 1 }}>
-              <div className="hero">
+              <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '40px', alignItems: 'center', padding: '30px 0' }}>
                 <div>
-                  <span style={{ background: 'rgba(37, 99, 235, 0.08)', border: '1px solid rgba(37, 99, 235, 0.2)', padding: '6px 14px', borderRadius: '20px', fontSize: '0.82rem', color: '#2563eb', display: 'inline-block', marginBottom: '16px', fontWeight: 700 }}>
+                  <span style={{ background: '#eff6ff', border: '1px solid #bfdbfe', padding: '6px 14px', borderRadius: '20px', fontSize: '0.82rem', color: '#2563eb', display: 'inline-block', marginBottom: '16px', fontWeight: 700 }}>
                     ✨ AI Symptom Assessment & Specialist Matching
                   </span>
-                  <h1 className="hero-title">Smart Healthcare <br/><span style={{ color: '#2563eb' }}>Instant Appointments</span></h1>
-                  <p className="hero-subtitle">
-                    Describe your symptoms to our 24/7 AI Chatbot. Get matched with top verified doctors and schedule your clinic appointments instantly.
+                  <h1 style={{ fontSize: '2.8rem', fontWeight: 800, lineHeight: 1.15, marginBottom: '16px', color: '#0f172a', fontFamily: "'Outfit', sans-serif" }}>
+                    Smart Healthcare <br/><span style={{ color: '#2563eb' }}>Instant Appointments</span>
+                  </h1>
+                  <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '24px' }}>
+                    Describe symptoms to our 24/7 AI Health Chatbot. Get matched with top verified specialists and schedule instant clinic visits.
                   </p>
-                  <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
-                    <button className="btn-primary" onClick={() => setIsChatOpen(true)}>🤖 Start AI Symptom Check</button>
-                  </div>
+                  <button className="btn-gradient-primary" style={{ width: 'auto', padding: '12px 24px' }} onClick={() => setIsChatOpen(true)}>
+                    🤖 Start AI Symptom Check
+                  </button>
                 </div>
 
-                <div className="glass-panel" style={{ padding: '30px', background: '#ffffff' }}>
-                  <h3 style={{ fontSize: '1.2rem', marginBottom: '16px', color: '#2563eb' }}>🔐 MediCare System Features</h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                    <div><strong>👤 Patient Portal:</strong> Mobile OTP / Google Login to access bookings & AI Chatbot.</div>
-                    <div><strong>👨‍⚕️ Doctor Portal:</strong> Professional doctor portal for schedule & AI pre-consultation summaries.</div>
-                    <div><strong>🚨 Emergency Triage:</strong> High-risk symptom alert detection.</div>
+                <div className="glass-auth-card" style={{ padding: '28px', background: '#ffffff' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+                    <ShieldSecurityIcon />
+                    <h3 style={{ fontSize: '1.15rem', color: '#0f172a', margin: 0, fontWeight: 700 }}>Verified Dual-Security Active</h3>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
+                    <div>📱 <strong>Mobile SMS OTP:</strong> Real-time SMS authentication via Telecom Gateways.</div>
+                    <div>📧 <strong>Gmail Security Code:</strong> Cryptographic verification delivered directly to your inbox.</div>
+                    <div>🔑 <strong>Signed RFC 7519 JWT:</strong> 15-minute access token & rotating sessions.</div>
                   </div>
                 </div>
               </div>
 
-              <div id="doctors-list" style={{ marginTop: '40px' }}>
+              <div id="doctors-list" style={{ marginTop: '30px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                  <div>
-                    <h2 style={{ fontSize: '1.6rem', fontWeight: 800 }}>Available <span style={{ color: '#2563eb' }}>Medical Specialists</span></h2>
-                    {selectedSpecialist && (
-                      <p style={{ color: 'var(--secondary-accent)', fontSize: '0.85rem' }}>
-                        Filtered by AI Recommendation: <strong>{selectedSpecialist}</strong> {' '}
-                        <button onClick={() => setSelectedSpecialist('')} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', textDecoration: 'underline' }}>(Clear)</button>
-                      </p>
-                    )}
-                  </div>
+                  <h2 style={{ fontSize: '1.6rem', fontWeight: 800, fontFamily: "'Outfit', sans-serif" }}>
+                    Available <span style={{ color: '#2563eb' }}>Medical Specialists</span>
+                  </h2>
                   <input
                     type="text"
-                    className="chat-input"
-                    style={{ width: '250px' }}
+                    className="glow-input"
+                    style={{ width: '260px' }}
                     placeholder="Search doctor or specialty..."
                     value={searchTerm}
                     onChange={e => setSearchTerm(e.target.value)}
@@ -386,7 +618,7 @@
 
                 <div className="doctors-grid">
                   {filteredDoctors.map(doc => (
-                    <div key={doc.id} className="doctor-card glass-panel">
+                    <div key={doc.id} className="doctor-card">
                       <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                         <img src={doc.avatar} alt={doc.name} className="doctor-avatar" />
                         <div>
@@ -400,7 +632,7 @@
                         <span>Fee: <strong>₹{doc.fee}</strong></span>
                       </div>
                       <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>📍 {doc.location}</p>
-                      <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} onClick={() => setSelectedDoctor(doc)}>
+                      <button className="btn-gradient-primary" onClick={() => setSelectedDoctor(doc)}>
                         📅 Book Appointment
                       </button>
                     </div>
@@ -410,20 +642,20 @@
             </div>
           )}
 
-          {/* Tab 2: Patient Portal */}
+          {/* Patient Portal */}
           {activeTab === 'patient' && (
             <div className="container">
-              <h2 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '20px' }}>Patient <span style={{ color: '#2563eb' }}>Portal</span></h2>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '20px', fontFamily: "'Outfit', sans-serif" }}>Patient <span style={{ color: '#2563eb' }}>Portal</span></h2>
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
                 <div>
                   <h3 style={{ fontSize: '1.2rem', marginBottom: '16px' }}>Scheduled Appointments</h3>
                   {appointments.map((apt, idx) => (
-                    <div key={idx} className="glass-panel" style={{ padding: '20px', marginBottom: '16px', borderLeft: '4px solid #2563eb', background: '#ffffff' }}>
+                    <div key={idx} className="glass-auth-card" style={{ padding: '20px', marginBottom: '16px', borderLeft: '5px solid #2563eb', background: '#ffffff' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <h4>{apt.doctor_name}</h4>
+                        <h4 style={{ fontSize: '1.05rem', color: '#0f172a' }}>{apt.doctor_name}</h4>
                         <span style={{ background: '#ecfdf5', color: '#047857', padding: '4px 10px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 700 }}>✓ {apt.status}</span>
                       </div>
-                      <p style={{ color: '#2563eb', fontSize: '0.85rem', margin: '4px 0' }}>{apt.specialization}</p>
+                      <p style={{ color: '#2563eb', fontSize: '0.85rem', margin: '4px 0', fontWeight: 600 }}>{apt.specialization}</p>
                       <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>📅 Date: {apt.date} | ⏰ Time: {apt.slot}</p>
                       <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '8px', marginTop: '10px', fontSize: '0.82rem', border: '1px solid #e2e8f0' }}>
                         <strong>Reported Symptoms:</strong> {apt.symptoms}<br/>
@@ -432,36 +664,36 @@
                     </div>
                   ))}
                 </div>
-                <div className="glass-panel" style={{ padding: '24px', background: '#ffffff' }}>
-                  <h4>Patient Profile</h4>
-                  <p style={{ marginTop: '10px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                    Name: {currentUser ? currentUser.name : 'Rohan Das'}<br/>
-                    Account Type: Patient<br/>
-                    Phone: {currentUser && currentUser.phone ? currentUser.phone : '+91 98765 43210'}<br/>
-                    Blood Group: O+ Positive
+                <div className="glass-auth-card" style={{ padding: '24px', background: '#ffffff', height: 'fit-content' }}>
+                  <h4>User Profile</h4>
+                  <p style={{ marginTop: '10px', fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
+                    <strong>Name:</strong> {currentUser.name}<br/>
+                    <strong>Role:</strong> {currentUser.role}<br/>
+                    <strong>Contact:</strong> {currentUser.phone_number || currentUser.email}<br/>
+                    <strong>Auth Method:</strong> Verified OTP
                   </p>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Tab 3: Doctor Dashboard */}
+          {/* Doctor Dashboard */}
           {activeTab === 'doctor' && (
             <div className="container">
-              <h2 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '20px' }}>Doctor <span style={{ color: '#2563eb' }}>Dashboard</span></h2>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>Logged in as: <strong>{currentUser ? currentUser.name : 'Dr. Rajesh Sharma'}</strong> (Cardiology Department)</p>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '20px', fontFamily: "'Outfit', sans-serif" }}>Doctor <span style={{ color: '#2563eb' }}>Dashboard</span></h2>
+              <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>Logged in as: <strong>{currentUser.name}</strong></p>
               <h3 style={{ fontSize: '1.2rem', marginBottom: '16px' }}>Today's Patient Queue</h3>
               {appointments.map((apt, idx) => (
-                <div key={idx} className="glass-panel" style={{ padding: '20px', marginBottom: '16px', background: '#ffffff' }}>
+                <div key={idx} className="glass-auth-card" style={{ padding: '20px', marginBottom: '16px', background: '#ffffff' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
                       <h4 style={{ color: '#0f172a' }}>{apt.patient_name} ({apt.patient_age} Yrs)</h4>
                       <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Slot: <strong>{apt.slot}</strong> | Date: {apt.date}</p>
                     </div>
-                    <button className="btn-primary" style={{ background: 'var(--doctor-gradient)' }}>Start Consultation</button>
+                    <button className="btn-gradient-primary" style={{ width: 'auto', background: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)' }}>Start Consultation</button>
                   </div>
                   <div style={{ marginTop: '14px', background: '#f0fdf4', padding: '12px', borderRadius: '10px', fontSize: '0.85rem', border: '1px solid #bbf7d0' }}>
-                    <strong style={{ color: 'var(--doctor-accent)' }}>✨ AI Pre-Consultation Summary:</strong>
+                    <strong style={{ color: '#0d9488' }}>✨ AI Pre-Consultation Summary:</strong>
                     <p style={{ margin: '4px 0 0 0', color: '#166534' }}>{apt.ai_summary}</p>
                   </div>
                 </div>
@@ -469,7 +701,7 @@
             </div>
           )}
 
-          {/* AI Chat Drawer */}
+          {/* Chat Widget */}
           {isChatOpen && (
             <ChatWidget onClose={() => setIsChatOpen(false)} onFilterSpec={(spec) => { setSelectedSpecialist(spec); setActiveTab('home'); setIsChatOpen(false); }} />
           )}
@@ -482,166 +714,684 @@
       );
     }
 
-    // EXACT MEDICARE AUTH WIDGET WITH DYNAMIC WELCOME HEADING
-    function MedicareAuthWidget({ onLogin }) {
-      const [role, setRole] = useState('patient');
-      const [useOtpMode, setUseOtpMode] = useState(false);
-      const [hasLoggedInBefore, setHasLoggedInBefore] = useState(false);
+    // DYNAMIC DESIGNER AUTHENTICATION PORTAL WITH SMOOTH ANIMATIONS
+    function DynamicAuthPortal({ onLogin }) {
+      const [authView, setAuthView] = useState('login'); // 'login' | 'signup'
+      const [role, setRole] = useState('patient'); // 'patient' | 'doctor'
+      const [authMode, setAuthMode] = useState('phone_otp'); // 'phone_otp' | 'email_otp' | 'password'
 
+      // Form States
       const [email, setEmail] = useState('');
-      const [phone, setPhone] = useState('+91 98765 43210');
       const [password, setPassword] = useState('');
-      const [otp, setOtp] = useState('');
-      const [rememberMe, setRememberMe] = useState(true);
+      const [phone, setPhone] = useState('');
+      
+      // OTP Verification States
+      const [otpStep, setOtpStep] = useState('enter_contact'); // 'enter_contact' | 'enter_code'
+      const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', '']);
+      const [resendCountdown, setResendCountdown] = useState(0);
+      const [isShaking, setIsShaking] = useState(false);
+      const [notification, setNotification] = useState('');
+      const [errorMessage, setErrorMessage] = useState('');
+      const [loading, setLoading] = useState(false);
 
-      useEffect(() => {
-        const prev = localStorage.getItem('has_logged_in_before');
-        if (prev === 'true') {
-          setHasLoggedInBefore(true);
+      // Sign Up States
+      const [signupName, setSignupName] = useState('');
+      const [signupEmail, setSignupEmail] = useState('');
+      const [signupPhone, setSignupPhone] = useState('');
+      const [signupPassword, setSignupPassword] = useState('');
+      const [signupAge, setSignupAge] = useState('');
+      const [signupSpecialization, setSignupSpecialization] = useState('General Physician');
+      const [signupQualification, setSignupQualification] = useState('');
+      const [signupFee, setSignupFee] = useState('');
+
+      // Session helper
+      const handleAuthSuccess = (data) => {
+        if (data.access_token) {
+          localStorage.setItem('medicare_access_token', data.access_token);
+          localStorage.setItem('medicare_refresh_token', data.refresh_token);
         }
-      }, []);
+        if (data.user) {
+          localStorage.setItem('has_logged_in_before', 'true');
+          onLogin(data.user);
+        }
+      };
 
-      const handleLogin = (e) => {
+      // Google 1-Click Popup & Redirect Handler
+      const handleGoogleLogin = () => {
+        localStorage.setItem('medicare_auth_role', role);
+        const width = 480;
+        const height = 660;
+        const left = Math.max(0, (window.screen.width - width) / 2);
+        const top = Math.max(0, (window.screen.height - height) / 2);
+
+        const authUrl = `google-auth.html?role=${encodeURIComponent(role)}`;
+        const popup = window.open(
+          authUrl,
+          'GoogleAuthPopup',
+          `width=${width},height=${height},top=${top},left=${left},status=no,resizable=yes,scrollbars=yes`
+        );
+
+        if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+          // If popup is blocked by browser, redirect directly
+          window.location.href = authUrl;
+        }
+      };
+
+      // Auto-handle login if Google Auth popup sends postMessage
+      useEffect(() => {
+        const onGoogleMessage = (e) => {
+          if (e.data && e.data.type === 'GOOGLE_AUTH_SUCCESS') {
+            if (e.data.user) {
+              onLogin(e.data.user);
+            }
+          }
+        };
+        window.addEventListener('message', onGoogleMessage);
+        return () => window.removeEventListener('message', onGoogleMessage);
+      }, [onLogin]);
+
+      // Resend Timer
+      useEffect(() => {
+        let timer;
+        if (resendCountdown > 0) {
+          timer = setInterval(() => setResendCountdown(p => p - 1), 1000);
+        }
+        return () => clearInterval(timer);
+      }, [resendCountdown]);
+
+      // 1. DISPATCH OTP (SMS / EMAIL)
+      const handleDispatchOtp = async (e) => {
+        if (e) e.preventDefault();
+        setErrorMessage('');
+        setNotification('');
+        setLoading(true);
+
+        if (authMode === 'phone_otp') {
+          const cleanDigits = phone.replace(/\D/g, '');
+          if (cleanDigits.length < 10) {
+            setErrorMessage('Please enter a valid 10-digit mobile number.');
+            setLoading(false);
+            return;
+          }
+
+          try {
+            const res = await fetch(`${API_BASE}/api/auth/send-otp`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ phone_number: phone.trim() })
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              setNotification(data.message || `Verification OTP sent to ${phone} via SMS.`);
+              setOtpStep('enter_code');
+              setResendCountdown(30);
+              setTimeout(() => {
+                const el = document.getElementById('digit-0');
+                if (el) el.focus();
+              }, 150);
+            } else {
+              throw new Error(data.detail || 'Failed to dispatch SMS');
+            }
+          } catch (err) {
+            setErrorMessage(err.message || 'Unable to dispatch SMS OTP.');
+          } finally {
+            setLoading(false);
+          }
+        } else if (authMode === 'email_otp') {
+          if (!email || !email.includes('@')) {
+            setErrorMessage('Please enter a valid Gmail / Email address.');
+            setLoading(false);
+            return;
+          }
+
+          try {
+            const res = await fetch(`${API_BASE}/api/auth/send-email-otp`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: email.trim() })
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              setNotification(data.message || `Security verification code sent to ${email}`);
+              setOtpStep('enter_code');
+              setResendCountdown(30);
+              setTimeout(() => {
+                const el = document.getElementById('digit-0');
+                if (el) el.focus();
+              }, 150);
+            } else {
+              throw new Error(data.detail || 'Failed to dispatch email code');
+            }
+          } catch (err) {
+            setErrorMessage(err.message || 'Unable to send email code.');
+          } finally {
+            setLoading(false);
+          }
+        }
+      };
+
+      // 6-Digit Auto-advance handling
+      const handleDigitChange = (idx, val) => {
+        if (val.length > 1) {
+          const raw = val.replace(/\D/g, '').slice(0, 6).split('');
+          const newArr = [...otpDigits];
+          raw.forEach((d, i) => { if (i < 6) newArr[i] = d; });
+          setOtpDigits(newArr);
+          const next = Math.min(raw.length, 5);
+          const el = document.getElementById(`digit-${next}`);
+          if (el) el.focus();
+          return;
+        }
+
+        const newArr = [...otpDigits];
+        newArr[idx] = val.replace(/\D/g, '');
+        setOtpDigits(newArr);
+
+        if (val && idx < 5) {
+          const nextEl = document.getElementById(`digit-${idx + 1}`);
+          if (nextEl) nextEl.focus();
+        }
+      };
+
+      const handleDigitKeyDown = (idx, e) => {
+        if (e.key === 'Backspace' && !otpDigits[idx] && idx > 0) {
+          const prevEl = document.getElementById(`digit-${idx - 1}`);
+          if (prevEl) prevEl.focus();
+        }
+      };
+
+      // 2. VERIFY OTP (SMS / EMAIL)
+      const handleVerifyOtp = async (e) => {
+        if (e) e.preventDefault();
+        const code = otpDigits.join('');
+        if (code.length < 6) {
+          setErrorMessage('Please enter the complete 6-digit verification code.');
+          setIsShaking(true);
+          setTimeout(() => setIsShaking(false), 500);
+          return;
+        }
+
+        setErrorMessage('');
+        setLoading(true);
+
+        const endpoint = authMode === 'phone_otp' ? '/api/auth/verify-otp' : '/api/auth/verify-email-otp';
+        const payload = authMode === 'phone_otp' 
+          ? { phone_number: phone.trim(), otp: code, role: role }
+          : { email: email.trim(), otp: code, role: role };
+
+        try {
+          const res = await fetch(`${API_BASE}${endpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (res.ok && data.user) {
+            handleAuthSuccess(data);
+          } else {
+            throw new Error(data.detail || 'Invalid or expired verification code');
+          }
+        } catch (err) {
+          setErrorMessage(err.message || 'Verification failed. Please check the code.');
+          setIsShaking(true);
+          setTimeout(() => setIsShaking(false), 500);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      // 3. PASSWORD LOGIN
+      const handlePasswordLogin = async (e) => {
         e.preventDefault();
-        localStorage.setItem('has_logged_in_before', 'true');
-        onLogin({
-          name: role === 'patient' ? 'Rohan Das' : 'Dr. Rajesh Sharma',
+        setErrorMessage('');
+        setLoading(true);
+
+        try {
+          const res = await fetch(`${API_BASE}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email.trim(), password, role })
+          });
+          const data = await res.json();
+          if (res.ok && data.user) {
+            handleAuthSuccess(data);
+          } else {
+            throw new Error(data.detail || 'Invalid email or password');
+          }
+        } catch (err) {
+          setErrorMessage(err.message || 'Login failed.');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      // 4. SIGN UP
+      const handleSignUpSubmit = async (e) => {
+        e.preventDefault();
+        setErrorMessage('');
+        setLoading(true);
+
+        const payload = {
+          name: signupName.trim(),
+          email: signupEmail.trim(),
+          phone_number: signupPhone.trim(),
+          password: signupPassword,
           role: role,
-          email: email || `${role}@medicare.health`,
-          phone: phone
-        });
+          age: signupAge ? parseInt(signupAge) : 25,
+          specialization: role === 'doctor' ? signupSpecialization : null,
+          qualification: role === 'doctor' ? signupQualification : null,
+          fee: role === 'doctor' && signupFee ? parseInt(signupFee) : null
+        };
+
+        try {
+          const res = await fetch(`${API_BASE}/api/auth/signup`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (res.ok && data.user) {
+            handleAuthSuccess(data);
+          } else {
+            throw new Error(data.detail || 'Sign up failed');
+          }
+        } catch (err) {
+          setErrorMessage(err.message || 'Unable to register account.');
+        } finally {
+          setLoading(false);
+        }
       };
 
       return (
-        <div style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', zIndex: 500, background: 'linear-gradient(135deg, #eef2ff 0%, #e0f2fe 50%, #eff6ff 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 40px', overflow: 'hidden', boxSizing: 'border-box' }}>
+        <div style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', zIndex: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 40px', overflow: 'hidden' }}>
           
-          {/* Seamless Full-Width Background Curved Wave Graphic */}
-          <svg style={{ position: 'absolute', bottom: 0, left: 0, width: '100vw', height: '50vh', zIndex: 1, pointerEvents: 'none', opacity: 0.85 }} viewBox="0 0 1000 500" preserveAspectRatio="none">
-            <path fill="#2563eb" d="M0,500 L1000,500 L1000,320 C700,280 400,480 0,220 Z" opacity="0.15"></path>
-            <path fill="#3b82f6" d="M0,500 L1000,500 L1000,360 C650,320 350,460 0,280 Z" opacity="0.3"></path>
-            <path fill="#2563eb" d="M0,500 L1000,500 L1000,400 C600,350 300,480 0,330 Z" opacity="0.65"></path>
-          </svg>
+          {/* Animated Background Canvas */}
+          <div className="bg-canvas">
+            <div className="orb orb-1"></div>
+            <div className="orb orb-2"></div>
+            <div className="orb orb-3"></div>
 
-          <div style={{ maxWidth: '1240px', width: '100%', maxHeight: '92vh', margin: '0 auto', display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '50px', alignItems: 'center', zIndex: 10 }}>
+            {/* Dynamic Waves */}
+            <svg className="animated-waves" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <path className="wave-path-1" fill="#3b82f6" fillOpacity="0.25" d="M0,192L48,197.3C96,203,192,213,288,192C384,171,480,117,576,122.7C672,128,768,192,864,208C960,224,1056,192,1152,165.3C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+              <path className="wave-path-2" fill="#2563eb" fillOpacity="0.65" d="M0,224L48,229.3C96,235,192,245,288,224C384,203,480,149,576,144C672,139,768,181,864,208C960,235,1056,245,1152,229.3C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+          </div>
+
+          {/* Grid Layout Container */}
+          <div style={{ maxWidth: '1240px', width: '100%', maxHeight: '94vh', margin: '0 auto', display: 'grid', gridTemplateColumns: '1.15fr 0.85fr', gap: '50px', alignItems: 'center', zIndex: 10 }}>
             
-            {/* LEFT COLUMN: BRANDING */}
+            {/* LEFT HERO BRANDING & LIVE STATUS */}
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px' }}>
-                <svg width="44" height="44" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M50 88 C20 65 8 45 8 28 C8 15 18 6 31 6 C40 6 46 11 50 16 C54 11 60 6 69 6 C82 6 92 15 92 28 C92 45 80 65 50 88 Z" stroke="#2563eb" strokeWidth="7" fill="none" strokeLinejoin="round"/>
-                  <rect x="45" y="24" width="10" height="24" rx="3" fill="#2563eb"/>
-                  <rect x="38" y="31" width="24" height="10" rx="3" fill="#2563eb"/>
-                  <circle cx="22" cy="72" r="7" stroke="#2563eb" strokeWidth="4" fill="#ffffff"/>
-                  <circle cx="22" cy="72" r="3" fill="#2563eb"/>
-                  <path d="M22 65 C22 55 26 48 30 48" stroke="#2563eb" strokeWidth="4" strokeLinecap="round" fill="none"/>
-                </svg>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '24px' }}>
+                <MedicalCrossLogo />
                 <div>
-                  <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1d4ed8', margin: 0, lineHeight: 1 }}>MediCare</h3>
-                  <span style={{ fontSize: '0.78rem', color: '#475569', fontWeight: 600, display: 'block', marginTop: '2px' }}>Your Health, Our Priority</span>
+                  <h3 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#1e3a8a', margin: 0, lineHeight: 1, fontFamily: "'Outfit', sans-serif" }}>MediCare</h3>
+                  <span style={{ fontSize: '0.78rem', color: '#2563eb', fontWeight: 700, display: 'block', marginTop: '3px', letterSpacing: '0.5px' }}>YOUR HEALTH, OUR PRIORITY</span>
                 </div>
               </div>
 
-              <h1 style={{ fontSize: '3rem', fontWeight: 800, color: '#0f172a', lineHeight: 1.15, marginBottom: '12px' }}>
-                Doctor Patient <br /><span style={{ color: '#2563eb' }}>Appointment System</span>
+              <h1 style={{ fontSize: '3.1rem', fontWeight: 900, color: '#0f172a', lineHeight: 1.12, marginBottom: '16px', fontFamily: "'Outfit', sans-serif" }}>
+                Doctor Patient <br />
+                <span style={{ background: 'linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                  Appointment System
+                </span>
               </h1>
 
-              <div style={{ width: '60px', height: '4px', background: '#2563eb', borderRadius: '4px', marginBottom: '16px' }}></div>
+              <div style={{ width: '64px', height: '5px', background: 'linear-gradient(90deg, #2563eb, #06b6d4)', borderRadius: '4px', marginBottom: '20px' }}></div>
 
-              <p style={{ fontSize: '1.05rem', color: '#475569', lineHeight: 1.5, maxWidth: '460px', marginBottom: '28px' }}>
-                Book appointments, manage schedules and access your health care easily.
+              <p style={{ fontSize: '1.05rem', color: '#475569', lineHeight: 1.6, maxWidth: '480px', marginBottom: '28px', fontWeight: 500 }}>
+                Enterprise Dual-Authentication with Real-Time Mobile SMS OTP and Gmail Verification Code.
               </p>
 
-              <div style={{ background: 'rgba(255, 255, 255, 0.75)', backdropFilter: 'blur(10px)', borderRadius: '20px', padding: '18px 20px', border: '1px solid rgba(255, 255, 255, 0.8)', display: 'flex', alignItems: 'center', gap: '16px', maxWidth: '430px' }}>
-                <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&auto=format&fit=crop&q=80" alt="Doctor Consultation" style={{ width: '72px', height: '72px', borderRadius: '50%', objectFit: 'cover' }} />
-                <div>
-                  <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', margin: '0 0 2px 0' }}>Verified Doctors Queue</h4>
-                  <p style={{ fontSize: '0.78rem', color: '#64748b', margin: 0 }}>Instant AI symptom assessment and slot booking.</p>
+              {/* Floating Feature Badges */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', maxWidth: '440px' }}>
+                <div className="floating-badge" style={{ animationDelay: '0s' }}>
+                  <div className="pulse-dot"></div>
+                  <div>
+                    <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>Live OTP Dispatch Active</h4>
+                    <p style={{ fontSize: '0.76rem', color: '#64748b', margin: 0 }}>Fast2SMS, Twilio & SMTP encryption ready.</p>
+                  </div>
+                </div>
+
+                <div className="floating-badge" style={{ animationDelay: '-3s', background: 'rgba(255, 255, 255, 0.95)' }}>
+                  <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=100&auto=format&fit=crop&q=80" style={{ width: '42px', height: '42px', borderRadius: '50%', objectFit: 'cover' }} alt="Doctor" />
+                  <div>
+                    <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>500+ Verified Specialists</h4>
+                    <p style={{ fontSize: '0.76rem', color: '#64748b', margin: 0 }}>Instant schedule with Cardiologists, Dermatologists & more.</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* RIGHT COLUMN: FITTED WHITE LOGIN CARD */}
+            {/* RIGHT AUTH CARD */}
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <div style={{ width: '100%', maxWidth: '440px', background: '#ffffff', borderRadius: '24px', padding: '36px 32px', boxShadow: '0 25px 50px -12px rgba(37, 99, 235, 0.15)', border: '1px solid #f1f5f9', textAlign: 'center' }}>
+              <div className={`glass-auth-card ${isShaking ? 'shake-animation' : ''}`} style={{ width: '100%', maxWidth: '440px', textAlign: 'center', maxHeight: '88vh', overflowY: 'auto' }}>
                 
-                <div style={{ width: '64px', height: '64px', margin: '0 auto 12px auto', borderRadius: '50%', background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 20px rgba(37, 99, 235, 0.25)' }}>
-                  <UserAvatar3DIcon />
+                {/* Header Icon */}
+                <div style={{ width: '56px', height: '56px', margin: '0 auto 12px auto', borderRadius: '50%', background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 24px rgba(37, 99, 235, 0.28)' }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
                 </div>
 
-                {/* DYNAMIC WELCOME HEADING */}
-                <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#0f172a', marginBottom: '2px' }}>
-                  {hasLoggedInBefore ? "Welcome Back!" : "Welcome!"}
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '4px', fontFamily: "'Outfit', sans-serif" }}>
+                  {authView === 'signup' ? 'Create Account' : (authMode === 'phone_otp' ? 'Mobile SMS Verification' : (authMode === 'email_otp' ? 'Email OTP Verification' : 'Sign In'))}
                 </h2>
-                <p style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '18px' }}>
-                  {hasLoggedInBefore ? "Login to your account to continue" : "Access or sign in to your health account"}
+                <p style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '16px' }}>
+                  {authView === 'signup' ? `Register your ${role} profile` : `Access your ${role} portal with secure verification`}
                 </p>
 
-                {/* Role Switcher */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', background: '#f8fafc', padding: '5px', borderRadius: '12px', marginBottom: '18px', border: '1px solid #e2e8f0' }}>
-                  <button type="button" onClick={() => setRole('patient')} style={{ background: role === 'patient' ? '#2563eb' : 'transparent', color: role === 'patient' ? '#fff' : '#64748b', fontWeight: 700, padding: '9px', borderRadius: '9px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.85rem' }}>
+                {/* Role Switcher Pill */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', background: '#f1f5f9', padding: '4px', borderRadius: '14px', marginBottom: '14px', border: '1px solid #e2e8f0' }}>
+                  <button type="button" onClick={() => setRole('patient')} style={{ background: role === 'patient' ? '#2563eb' : 'transparent', color: role === 'patient' ? '#ffffff' : '#64748b', fontWeight: 700, padding: '8px', borderRadius: '10px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.82rem', transition: 'all 0.2s ease', boxShadow: role === 'patient' ? '0 4px 12px rgba(37, 99, 235, 0.25)' : 'none' }}>
                     <PatientIconSVG active={role === 'patient'} /> Patient
                   </button>
-                  <button type="button" onClick={() => setRole('doctor')} style={{ background: role === 'doctor' ? '#2563eb' : 'transparent', color: role === 'doctor' ? '#fff' : '#64748b', fontWeight: 700, padding: '9px', borderRadius: '9px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.85rem' }}>
+                  <button type="button" onClick={() => setRole('doctor')} style={{ background: role === 'doctor' ? '#2563eb' : 'transparent', color: role === 'doctor' ? '#ffffff' : '#64748b', fontWeight: 700, padding: '8px', borderRadius: '10px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.82rem', transition: 'all 0.2s ease', boxShadow: role === 'doctor' ? '0 4px 12px rgba(37, 99, 235, 0.25)' : 'none' }}>
                     <DoctorIconSVG active={role === 'doctor'} /> Doctor
                   </button>
                 </div>
 
-                <form onSubmit={handleLogin} style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                  <div>
-                    <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '5px' }}>
-                      {useOtpMode ? "Mobile Phone Number" : "Email Address"}
-                    </label>
-                    <input className="chat-input" style={{ width: '100%', padding: '11px 14px', borderRadius: '11px', background: '#ffffff', border: '1px solid #cbd5e1' }} placeholder={useOtpMode ? "+91 98765 43210" : "Enter your email"} value={useOtpMode ? phone : email} onChange={e=> useOtpMode ? setPhone(e.target.value) : setEmail(e.target.value)} required />
-                  </div>
-
-                  <div>
-                    <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '5px' }}>
-                      {useOtpMode ? "OTP Code (Demo Code: 123456)" : "Password"}
-                    </label>
-                    <input type={useOtpMode ? "text" : "password"} className="chat-input" style={{ width: '100%', padding: '11px 14px', borderRadius: '11px', background: '#ffffff', border: '1px solid #cbd5e1' }} placeholder={useOtpMode ? "123456" : "Enter your password"} value={useOtpMode ? otp : password} onChange={e=> useOtpMode ? setOtp(e.target.value) : setPassword(e.target.value)} required />
-                  </div>
-
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#64748b', cursor: 'pointer' }}>
-                      <input type="checkbox" checked={rememberMe} onChange={e=>setRememberMe(e.target.checked)} /> Remember me
-                    </label>
-                    <span style={{ color: '#2563eb', fontWeight: 600, cursor: 'pointer' }}>Forgot Password?</span>
-                  </div>
-
-                  <button type="submit" style={{ width: '100%', background: '#2563eb', color: '#ffffff', fontWeight: 700, padding: '13px', borderRadius: '11px', border: 'none', cursor: 'pointer', fontSize: '0.95rem', boxShadow: '0 8px 20px rgba(37, 99, 235, 0.25)' }}>
-                    ➔ Login
+                {/* Login / Sign Up Switcher */}
+                <div style={{ display: 'flex', borderBottom: '2px solid #e2e8f0', marginBottom: '16px' }}>
+                  <button type="button" onClick={() => { setAuthView('login'); setErrorMessage(''); setNotification(''); setOtpStep('enter_contact'); }} style={{ flex: 1, padding: '8px', background: 'none', border: 'none', borderBottom: authView === 'login' ? '2.5px solid #2563eb' : 'none', color: authView === 'login' ? '#2563eb' : '#64748b', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', marginBottom: '-2px' }}>
+                    Login
                   </button>
-                </form>
+                  <button type="button" onClick={() => { setAuthView('signup'); setErrorMessage(''); setNotification(''); }} style={{ flex: 1, padding: '8px', background: 'none', border: 'none', borderBottom: authView === 'signup' ? '2.5px solid #2563eb' : 'none', color: authView === 'signup' ? '#2563eb' : '#64748b', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', marginBottom: '-2px' }}>
+                    Sign Up
+                  </button>
+                </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '18px 0 14px 0', color: '#94a3b8', fontSize: '0.78rem', fontWeight: 600 }}>
+                {/* Notifications & Error Alerts */}
+                {notification && (
+                  <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', color: '#1d4ed8', padding: '10px 12px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: 600, marginBottom: '14px', textAlign: 'left', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <span>✓</span> <span>{notification}</span>
+                  </div>
+                )}
+                {errorMessage && (
+                  <div style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', padding: '10px 12px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: 600, marginBottom: '14px', textAlign: 'left', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <span>⚠️</span> <span>{errorMessage}</span>
+                  </div>
+                )}
+
+                {/* 1-Click Google Sign In Button */}
+                <button
+                  type="button"
+                  onClick={handleGoogleLogin}
+                  className="btn-google-signin"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                  </svg>
+                  <span>Continue with Google</span>
+                  <span style={{ marginLeft: 'auto', background: '#e8f0fe', color: '#1a73e8', fontSize: '0.72rem', padding: '2px 8px', borderRadius: '10px', fontWeight: 700 }}>
+                    1-Click
+                  </span>
+                </button>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '2px 0 14px 0', color: '#94a3b8', fontSize: '0.72rem', fontWeight: 600 }}>
                   <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
-                  <span>or continue with</span>
+                  <span>OR CONTINUE WITH {authView === 'signup' ? 'DETAILS' : 'OTP / PASSWORD'}</span>
                   <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
                 </div>
 
-                {/* SOCIAL BUTTONS */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                  <button type="button" onClick={() => { localStorage.setItem('has_logged_in_before', 'true'); onLogin({ name: 'Rohan Das', role }); }} style={{ background: '#ffffff', border: '1px solid #e2e8f0', color: '#1e293b', fontWeight: 600, padding: '9px 10px', borderRadius: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.8rem' }}>
-                    <svg width="18" height="18" viewBox="0 0 24 24">
-                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                    </svg>
-                    Continue with Google
-                  </button>
-                  
-                  <button type="button" onClick={() => setUseOtpMode(!useOtpMode)} style={{ background: useOtpMode ? '#eff6ff' : '#ffffff', border: useOtpMode ? '1px solid #2563eb' : '1px solid #e2e8f0', color: useOtpMode ? '#2563eb' : '#1e293b', fontWeight: 600, padding: '9px 10px', borderRadius: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.8rem' }}>
-                    <PhoneOtpBadgeSVG />
-                    Mobile OTP Login
-                  </button>
-                </div>
+                {/* VIEW 1: SIGN UP FORM */}
+                {authView === 'signup' ? (
+                  <form onSubmit={handleSignUpSubmit} style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <div>
+                      <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '4px' }}>Full Name *</label>
+                      <input className="glow-input" placeholder={role === 'doctor' ? 'Dr. Full Name' : 'Your Full Name'} value={signupName} onChange={e=>setSignupName(e.target.value)} required />
+                    </div>
 
-                <div style={{ marginTop: '20px', fontSize: '0.82rem', color: '#64748b' }}>
-                  Don't have an account? <span style={{ color: '#2563eb', fontWeight: 700, cursor: 'pointer' }}>Sign up</span>
-                </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                      <div>
+                        <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '4px' }}>Email Address *</label>
+                        <input type="email" className="glow-input" placeholder="user@gmail.com" value={signupEmail} onChange={e=>setSignupEmail(e.target.value)} required />
+                      </div>
+                      <div>
+                        <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '4px' }}>Mobile Number *</label>
+                        <input type="tel" className="glow-input" placeholder="+91 9876543210" value={signupPhone} onChange={e=>setSignupPhone(e.target.value)} required />
+                      </div>
+                    </div>
+
+                    {role === 'doctor' ? (
+                      <>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '10px' }}>
+                          <div>
+                            <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '4px' }}>Specialization</label>
+                            <select value={signupSpecialization} onChange={e=>setSignupSpecialization(e.target.value)} style={{ width: '100%', padding: '11px 10px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '0.85rem', outline: 'none', background: '#fff' }}>
+                              <option value="General Physician">General Physician</option>
+                              <option value="Cardiologist">Cardiologist</option>
+                              <option value="Dermatologist">Dermatologist</option>
+                              <option value="Neurologist">Neurologist</option>
+                              <option value="Pulmonologist">Pulmonologist</option>
+                              <option value="Orthopedist">Orthopedist</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '4px' }}>Fee (₹)</label>
+                            <input type="number" className="glow-input" placeholder="600" value={signupFee} onChange={e=>setSignupFee(e.target.value)} />
+                          </div>
+                        </div>
+                        <div>
+                          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '4px' }}>Qualification</label>
+                          <input type="text" className="glow-input" placeholder="e.g. MBBS, MD (10 Yrs Exp)" value={signupQualification} onChange={e=>setSignupQualification(e.target.value)} />
+                        </div>
+                      </>
+                    ) : (
+                      <div>
+                        <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '4px' }}>Age</label>
+                        <input type="number" className="glow-input" placeholder="e.g. 28" value={signupAge} onChange={e=>setSignupAge(e.target.value)} />
+                      </div>
+                    )}
+
+                    <div>
+                      <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '4px' }}>Password *</label>
+                      <input type="password" className="glow-input" placeholder="Min. 6 characters" value={signupPassword} onChange={e=>setSignupPassword(e.target.value)} required />
+                    </div>
+
+                    <button type="submit" disabled={loading} className="btn-gradient-primary" style={{ marginTop: '4px' }}>
+                      {loading ? 'Creating Account...' : 'Complete Sign Up →'}
+                    </button>
+                  </form>
+                ) : (
+                  /* VIEW 2: LOGIN FLOWS */
+                  <div>
+                    {/* OPTION A: MOBILE SMS OTP / EMAIL OTP */}
+                    {(authMode === 'phone_otp' || authMode === 'email_otp') ? (
+                      otpStep === 'enter_contact' ? (
+                        /* STEP 1: ENTER CONTACT */
+                        <form onSubmit={handleDispatchOtp} style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                          <div>
+                            <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '6px' }}>
+                              {authMode === 'phone_otp' ? 'Mobile Number (E.164)' : 'Gmail / Email Address'}
+                            </label>
+                            
+                            {authMode === 'phone_otp' ? (
+                              <input
+                                type="tel"
+                                className="glow-input"
+                                placeholder="+91 9876543210"
+                                value={phone}
+                                onChange={e=>setPhone(e.target.value)}
+                                required
+                                autoFocus
+                              />
+                            ) : (
+                              <input
+                                type="email"
+                                className="glow-input"
+                                placeholder="yourname@gmail.com"
+                                value={email}
+                                onChange={e=>setEmail(e.target.value)}
+                                required
+                                autoFocus
+                              />
+                            )}
+
+                            <span style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '5px', display: 'block' }}>
+                              {authMode === 'phone_otp' 
+                                ? 'A 6-digit verification code will be sent to your mobile phone via SMS.' 
+                                : 'A 6-digit security code will be sent to your Gmail inbox.'}
+                            </span>
+                          </div>
+
+                          <button type="submit" disabled={loading} className="btn-gradient-primary">
+                            {loading 
+                              ? 'Dispatching Code...' 
+                              : (authMode === 'phone_otp' ? '📱 Send Mobile SMS OTP' : '📧 Send Gmail Security Code')}
+                          </button>
+                        </form>
+                      ) : (
+                        /* STEP 2: ENTER 6-DIGIT CODE */
+                        <form onSubmit={handleVerifyOtp} style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#334155' }}>
+                              Enter 6-Digit Code ({authMode === 'phone_otp' ? phone : email})
+                            </label>
+                            <button
+                              type="button"
+                              onClick={() => { setOtpStep('enter_contact'); setErrorMessage(''); }}
+                              style={{ background: 'none', border: 'none', color: '#2563eb', fontSize: '0.76rem', fontWeight: 700, cursor: 'pointer' }}
+                            >
+                              Change
+                            </button>
+                          </div>
+
+                          {/* 6 Individual Digit Boxes */}
+                          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                            {otpDigits.map((digit, idx) => (
+                              <input
+                                key={idx}
+                                id={`digit-${idx}`}
+                                type="text"
+                                maxLength="1"
+                                value={digit}
+                                onChange={e => handleDigitChange(idx, e.target.value)}
+                                onKeyDown={e => handleDigitKeyDown(idx, e)}
+                                className={`otp-digit-input ${digit ? 'filled' : ''}`}
+                              />
+                            ))}
+                          </div>
+
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem', color: '#64748b' }}>
+                            {resendCountdown > 0 ? (
+                              <span>Resend in <strong style={{ color: '#2563eb' }}>{resendCountdown}s</strong></span>
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={handleDispatchOtp}
+                                style={{ background: 'none', border: 'none', color: '#2563eb', fontWeight: 700, cursor: 'pointer', fontSize: '0.78rem' }}
+                              >
+                                🔄 Resend Code
+                              </button>
+                            )}
+                          </div>
+
+                          <button type="submit" disabled={loading} className="btn-gradient-primary">
+                            {loading ? 'Verifying Code...' : '✓ Verify Code & Sign In'}
+                          </button>
+                        </form>
+                      )
+                    ) : (
+                      /* OPTION B: STANDARD EMAIL & PASSWORD */
+                      <form onSubmit={handlePasswordLogin} style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                        <div>
+                          <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '5px' }}>
+                            Email Address
+                          </label>
+                          <input type="email" className="glow-input" placeholder="user@gmail.com" value={email} onChange={e=>setEmail(e.target.value)} required />
+                        </div>
+
+                        <div>
+                          <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '5px' }}>
+                            Password
+                          </label>
+                          <input type="password" className="glow-input" placeholder="••••••••" value={password} onChange={e=>setPassword(e.target.value)} required />
+                        </div>
+
+                        <button type="submit" disabled={loading} className="btn-gradient-primary">
+                          {loading ? 'Authenticating...' : '➔ Sign In'}
+                        </button>
+                      </form>
+                    )}
+
+                    {/* Divider */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '20px 0 14px 0', color: '#94a3b8', fontSize: '0.78rem', fontWeight: 600 }}>
+                      <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
+                      <span>authentication options</span>
+                      <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
+                    </div>
+
+                    {/* Dual Auth Selector Buttons */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                      <button
+                        type="button"
+                        onClick={() => { setAuthMode('phone_otp'); setOtpStep('enter_contact'); setErrorMessage(''); setNotification(''); }}
+                        style={{
+                          background: authMode === 'phone_otp' ? '#eff6ff' : '#ffffff',
+                          border: authMode === 'phone_otp' ? '1.8px solid #2563eb' : '1px solid #cbd5e1',
+                          color: authMode === 'phone_otp' ? '#2563eb' : '#334155',
+                          fontWeight: 700,
+                          padding: '10px 8px',
+                          borderRadius: '12px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          fontSize: '0.8rem',
+                          transition: 'all 0.2s ease',
+                          boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+                        }}
+                      >
+                        <span>📱</span> Mobile SMS OTP
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => { setAuthMode('email_otp'); setOtpStep('enter_contact'); setErrorMessage(''); setNotification(''); }}
+                        style={{
+                          background: authMode === 'email_otp' ? '#eff6ff' : '#ffffff',
+                          border: authMode === 'email_otp' ? '1.8px solid #2563eb' : '1px solid #cbd5e1',
+                          color: authMode === 'email_otp' ? '#2563eb' : '#334155',
+                          fontWeight: 700,
+                          padding: '10px 8px',
+                          borderRadius: '12px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          fontSize: '0.8rem',
+                          transition: 'all 0.2s ease',
+                          boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+                        }}
+                      >
+                        <span>📧</span> Gmail OTP
+                      </button>
+                    </div>
+
+                    <div style={{ marginTop: '10px', textAlign: 'center' }}>
+                      <button
+                        type="button"
+                        onClick={() => { setAuthMode(authMode === 'password' ? 'phone_otp' : 'password'); setOtpStep('enter_contact'); setErrorMessage(''); setNotification(''); }}
+                        style={{ background: 'none', border: 'none', color: '#64748b', fontSize: '0.78rem', fontWeight: 600, cursor: 'pointer', textDecoration: 'underline' }}
+                      >
+                        {authMode === 'password' ? '← Switch to OTP Verification' : 'Use Email & Password instead'}
+                      </button>
+                    </div>
+
+                  </div>
+                )}
+
               </div>
             </div>
+
           </div>
 
         </div>
@@ -687,9 +1437,9 @@
       };
 
       return (
-        <div className="chat-drawer glass-panel">
+        <div className="chat-drawer">
           <div className="chat-header">
-            <h4 style={{ color: '#0f172a' }}>🤖 AI Health Assistant</h4>
+            <h4 style={{ color: '#0f172a', fontWeight: 700 }}>🤖 AI Health Assistant</h4>
             <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: '1.1rem' }}>✕</button>
           </div>
           <div className="chat-body">
@@ -697,7 +1447,7 @@
               <div key={i} className={`chat-msg ${m.sender} ${m.isEmerg ? 'emergency' : ''}`}>
                 <p style={{ whiteSpace: 'pre-line' }}>{m.text}</p>
                 {m.spec && !m.isEmerg && (
-                  <button className="btn-primary" style={{ marginTop: '8px', fontSize: '0.8rem', width: '100%', justifyContent: 'center' }} onClick={() => onFilterSpec(m.spec)}>
+                  <button className="btn-gradient-primary" style={{ marginTop: '8px', fontSize: '0.8rem', width: '100%', justifyContent: 'center' }} onClick={() => onFilterSpec(m.spec)}>
                     Find {m.spec} Doctors →
                   </button>
                 )}
@@ -705,8 +1455,8 @@
             ))}
           </div>
           <div className="chat-footer">
-            <input className="chat-input" placeholder="Type symptoms..." value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==='Enter'&&handleSend()} />
-            <button className="btn-primary" onClick={handleSend}>Send</button>
+            <input className="glow-input" placeholder="Type symptoms..." value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==='Enter'&&handleSend()} />
+            <button className="btn-gradient-primary" style={{ width: 'auto', padding: '10px 18px' }} onClick={handleSend}>Send</button>
           </div>
         </div>
       );
@@ -737,7 +1487,7 @@
 
       return (
         <div className="modal-overlay">
-          <div className="modal-content glass-panel" style={{ background: '#ffffff' }}>
+          <div className="modal-content" style={{ background: '#ffffff' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
               <h3 style={{ color: '#0f172a' }}>Book Appointment with {doctor.name}</h3>
               <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer' }}>✕</button>
@@ -745,25 +1495,25 @@
             <form onSubmit={handleConfirm} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div>
                 <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>Patient Name</label>
-                <input className="chat-input" style={{ width: '100%', background: '#f8fafc' }} value={name} onChange={e=>setName(e.target.value)} required />
+                <input className="glow-input" style={{ background: '#f8fafc' }} value={name} onChange={e=>setName(e.target.value)} required />
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                 <div>
                   <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>Age</label>
-                  <input type="number" className="chat-input" style={{ width: '100%', background: '#f8fafc' }} value={age} onChange={e=>setAge(e.target.value)} required />
+                  <input type="number" className="glow-input" style={{ background: '#f8fafc' }} value={age} onChange={e=>setAge(e.target.value)} required />
                 </div>
                 <div>
                   <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>Time Slot</label>
-                  <select className="chat-input" style={{ width: '100%', background: '#f8fafc' }} value={slot} onChange={e=>setSlot(e.target.value)}>
+                  <select className="glow-input" style={{ background: '#f8fafc' }} value={slot} onChange={e=>setSlot(e.target.value)}>
                     {doctor.available_slots.map((s, i) => <option key={i} value={s}>{s}</option>)}
                   </select>
                 </div>
               </div>
               <div>
                 <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>Symptoms / Notes for Doctor</label>
-                <textarea className="chat-input" style={{ width: '100%', height: '60px', background: '#f8fafc' }} value={symptoms} onChange={e=>setSymptoms(e.target.value)} placeholder="Describe symptoms..." />
+                <textarea className="glow-input" style={{ width: '100%', height: '60px', background: '#f8fafc' }} value={symptoms} onChange={e=>setSymptoms(e.target.value)} placeholder="Describe symptoms..." />
               </div>
-              <button type="submit" className="btn-primary" style={{ justifyContent: 'center', marginTop: '10px' }}>Confirm Appointment Booking</button>
+              <button type="submit" className="btn-gradient-primary" style={{ justifyContent: 'center', marginTop: '10px' }}>Confirm Appointment Booking</button>
             </form>
           </div>
         </div>

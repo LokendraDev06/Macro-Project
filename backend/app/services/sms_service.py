@@ -3,6 +3,11 @@ import re
 import requests
 from typing import Dict, Any
 
+from dotenv import load_dotenv
+
+# Ensure environment is loaded
+load_dotenv(override=True)
+
 FAST2SMS_API_KEY = os.getenv("FAST2SMS_API_KEY", "")
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "")
@@ -14,10 +19,11 @@ def dispatch_sms_otp(phone_e164: str, otp_code: str) -> Dict[str, Any]:
     1. Fast2SMS (Indian Mobile Numbers)
     2. Twilio (Global SMS)
     """
+    fast2sms_key = os.getenv("FAST2SMS_API_KEY", FAST2SMS_API_KEY)
     clean_digits = re.sub(r'\D', '', phone_e164)
     
     # 1. Fast2SMS Delivery (India)
-    if FAST2SMS_API_KEY:
+    if fast2sms_key:
         try:
             # 10-digit Indian recipient
             target_number = clean_digits[-10:]
@@ -28,15 +34,20 @@ def dispatch_sms_otp(phone_e164: str, otp_code: str) -> Dict[str, Any]:
                 "numbers": target_number
             }
             headers = {
-                "authorization": FAST2SMS_API_KEY,
+                "authorization": fast2sms_key,
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             res = requests.post(url, data=payload, headers=headers, timeout=10)
             res_json = res.json()
+            is_sent = res_json.get("return") is True
             print(f"[SMS Gateway Fast2SMS]: Dispatched OTP to {target_number}. Status: {res_json}")
-            return {"success": True, "provider": "fast2sms", "details": res_json}
+            if is_sent:
+                return {"success": True, "provider": "fast2sms", "details": res_json}
+            else:
+                return {"success": False, "provider": "fast2sms", "details": res_json, "error": res_json.get("message")}
         except Exception as err:
             print(f"[SMS Gateway Fast2SMS Error]: {err}")
+            return {"success": False, "provider": "fast2sms", "error": str(err)}
 
     # 2. Twilio Delivery (International)
     if TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN and TWILIO_PHONE_NUMBER:
@@ -60,6 +71,10 @@ def dispatch_sms_otp(phone_e164: str, otp_code: str) -> Dict[str, Any]:
         except Exception as err:
             print(f"[SMS Gateway Twilio Error]: {err}")
 
-    # Fallback log
-    print(f"[SMS Service]: Dispatched OTP to {phone_e164}")
-    return {"success": True, "provider": "console_service", "message": "Dispatched successfully"}
+    # Fallback log (visible in terminal for instant testing)
+    print(f"\n==========================================")
+    print(f"📱 [SMS Service OTP Dispatch]")
+    print(f"Recipient: {phone_e164}")
+    print(f"VERIFICATION OTP CODE: >>> {otp_code} <<<")
+    print(f"==========================================\n")
+    return {"success": True, "provider": "console_service", "message": f"Dispatched OTP to {phone_e164}"}

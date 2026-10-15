@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { X, Calendar, Clock, CheckCircle2, User, Phone, FileText } from 'lucide-react';
 
 export default function AppointmentModal({ doctor, onClose, onBookingSuccess }) {
+  const todayStr = new Date().toISOString().split('T')[0];
   const [name, setName] = useState('Rohan Das');
   const [age, setAge] = useState('28');
   const [phone, setPhone] = useState('+91 98765 43210');
-  const [date, setDate] = useState('2026-08-28');
+  const [date, setDate] = useState(todayStr);
   const [selectedSlot, setSelectedSlot] = useState(doctor.available_slots[0] || '');
   const [symptoms, setSymptoms] = useState('');
   const [loading, setLoading] = useState(false);
@@ -90,7 +91,7 @@ export default function AppointmentModal({ doctor, onClose, onBookingSuccess }) 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
             <div>
               <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>Date</label>
-              <input type="date" className="chat-input" style={{ width: '100%' }} value={date} onChange={e=>setDate(e.target.value)} required />
+              <input type="date" min={todayStr} className="chat-input" style={{ width: '100%' }} value={date} onChange={e=>setDate(e.target.value)} required />
             </div>
             <div>
               <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>Available Time Slot</label>

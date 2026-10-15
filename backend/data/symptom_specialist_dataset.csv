@@ -19,3 +19,5 @@ symptoms,disease,recommended_specialist,severity,is_emergency
 "anxiety, panic attacks, persistent sadness, insomnia",Depression / Anxiety Disorder,Psychiatrist,Medium,False
 "lower back pain, radiation to leg, numbness",Sciatica / Disc Herniation,Neurologist / Orthopedist,Medium,False
 "painful urination, fever, lower abdominal pain",Urinary Tract Infection (UTI),Urologist,Medium,False
+"child fever, infant crying, pediatric vaccination, baby cold",Pediatric Health,Pediatrician,Medium,False
+"irregular periods, menstrual cramps, pregnancy checkup, pelvic pain",Gynecological Health,Gynecologist,Medium,False

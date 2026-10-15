@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>Milestones 1, 2 & 3 Complete Viva Guide (Hinglish) - AI-Based Patient Appointment System</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 15mm 13mm 15mm 13mm;
+    }
+    
+    @page :first {
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1e293b;
+      background-color: #ffffff;
+      line-height: 1.55;
+      font-size: 9.7pt;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    /* Cover Page */
+    .cover-page {
+      height: 100vh;
+      min-height: 297mm;
+      background: linear-gradient(135deg, #091e3a 0%, #112d4e 50%, #008080 100%);
+      color: #ffffff;
+      padding: 38mm 20mm 25mm 20mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-after: always;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: rgba(0, 209, 178, 0.2);
+      border: 1px solid #00d1b2;
+      color: #00f2c3;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 9pt;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .cover-title {
+      font-size: 28pt;
+      font-weight: 800;
+      line-height: 1.18;
+      margin-bottom: 14px;
+      background: linear-gradient(to right, #ffffff, #a7f3d0, #6ee7b7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cover-subtitle {
+      font-size: 13pt;
+      font-weight: 400;
+      color: #cbd5e1;
+      margin-bottom: 25px;
+      border-left: 4px solid #00d1b2;
+      padding-left: 15px;
+      line-height: 1.4;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: auto;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meta-label {
+      font-size: 7.5pt;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94a3b8;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .meta-value {
+      font-size: 10pt;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .meta-value small {
+      font-weight: 400;
+      color: #cbd5e1;
+      font-size: 8.5pt;
+    }
+
+    .cover-footer {
+      margin-top: 25px;
+      font-size: 8pt;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 12px;
+    }
+
+    /* Content Styling */
+    h1, h2, h3, h4 {
+      color: #0f172a;
+      font-weight: 700;
+      page-break-after: avoid;
+    }
+
+    h1 {
+      font-size: 17pt;
+      border-bottom: 2px solid #008080;
+      padding-bottom: 5px;
+      margin-top: 20px;
+      margin-bottom: 12px;
+      color: #091e3a;
+      display: flex;
+      align-items: center;
+    }
+
+    h1::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 18px;
+      background: linear-gradient(to bottom, #008080, #00d1b2);
+      margin-right: 10px;
+      border-radius: 3px;
+    }
+
+    h2 {
+      font-size: 12.5pt;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      color: #1e3a8a;
+    }
+
+    h3 {
+      font-size: 10.5pt;
+      margin-top: 10px;
+      margin-bottom: 6px;
+      color: #0f766e;
+    }
+
+    p {
+      margin-bottom: 8px;
+      text-align: justify;
+    }
+
+    .info-card {
+      background-color: #f8fafc;
+      border-left: 4px solid #008080;
+      border-radius: 0 8px 8px 0;
+      padding: 10px 14px;
+      margin-bottom: 11px;
+    }
+
+    .viva-box {
+      background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);
+      border: 1px solid #99f6e4;
+      border-left: 5px solid #0d9488;
+      border-radius: 8px;
+      padding: 11px 13px;
+      margin: 11px 0;
+      page-break-inside: avoid;
+    }
+
+    .viva-box .viva-q {
+      font-weight: 700;
+      color: #0f766e;
+      font-size: 9.8pt;
+      margin-bottom: 4px;
+    }
+
+    .viva-box .viva-q::before {
+      content: "🎯 Viva Question: ";
+      font-weight: 800;
+      color: #0d9488;
+    }
+
+    .viva-box .viva-ans {
+      color: #1e293b;
+      font-size: 9.2pt;
+      line-height: 1.5;
+    }
+
+    .highlight-card {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid #2563eb;
+      border-radius: 6px;
+      padding: 9px 13px;
+      margin: 9px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 14px 0;
+      font-size: 8.8pt;
+      page-break-inside: avoid;
+    }
+
+    th {
+      background-color: #0f172a;
+      color: #ffffff;
+      text-align: left;
+      padding: 7px 10px;
+      font-weight: 600;
+      font-size: 8.5pt;
+    }
+
+    td {
+      padding: 6px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 9px 0;
+      page-break-inside: avoid;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 9px 0;
+      page-break-inside: avoid;
+    }
+
+    .stat-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 9px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 15pt;
+      font-weight: 800;
+      color: #008080;
+    }
+
+    .stat-title {
+      font-size: 7.5pt;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    pre, code {
+      font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
+    }
+
+    pre {
+      background-color: #0f172a;
+      color: #f8fafc;
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 8pt;
+      line-height: 1.4;
+      margin: 8px 0;
+      page-break-inside: avoid;
+    }
+
+    code {
+      background-color: #f1f5f9;
+      color: #0f766e;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 8.5pt;
+    }
+
+    ul, ol {
+      margin-left: 17px;
+      margin-bottom: 8px;
+    }
+
+    li {
+      margin-bottom: 3px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 7.5pt;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge-primary { background: #e0f2fe; color: #0369a1; }
+    .badge-success { background: #dcfce7; color: #15803d; }
+    .badge-danger { background: #fee2e2; color: #b91c1c; }
+    .badge-warning { background: #fef3c7; color: #b45309; }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 8pt;
+      color: #94a3b8;
+      margin-top: 18px;
+      padding-top: 8px;
+      border-top: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER PAGE -->
+  <div class="cover-page">
+    <div>
+      <span class="cover-badge">Viva Presentation & Study Guide (Hinglish)</span>
+      <h1 class="cover-title" style="border:none; margin:0; padding:0; display:block;">AI-Based Patient<br>Appointment System</h1>
+      <p class="cover-subtitle">Milestone 1, Milestone 2 aur Milestone 3 ka Complete Master Explanation Guide</p>
+    </div>
+
+    <div>
+      <div class="cover-meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Project Domain</span>
+          <span class="meta-value">Healthcare AI & Full-Stack Web Application</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Core Tech Stack</span>
+          <span class="meta-value">React 18 + FastAPI + Python NLP + SQLite + Google OAuth</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Team Members</span>
+          <span class="meta-value">Lokendra Prajapati <small>(BTIT2603D03)</small><br>Samyak Lariya <small>(BTIT2603D05)</small></span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Branch & Degree</span>
+          <span class="meta-value">B.Tech Information Technology (B.Tech IT)<br><small>Final / Major Project 2026</small></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <span>AI-Based Patient Appointment System — Master Viva Guide</span>
+      <span>Lokendra Prajapati & Samyak Lariya</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: QUICK ELEVATOR PITCH -->
+  <div>
+    <h1>1. Project Ka Main Idea (30-Second Intro for Viva)</h1>
+
+    <div class="info-card">
+      <strong>Examiner ke aage bolne ke liye 30-Second Elevator Pitch:</strong><br>
+      <em>"Good morning Sir/Ma'am. Hamara project hai <strong>AI-Based Patient Appointment System</strong>. Aaj kal Practo ya Zocdoc jaise apps me patient ko khud decide karna padta hai ki kis doctor ke paas jaana hai (self-diagnosis), jisse galat specialist book ho jaata hai. Aur Ada Health jaise symptom checkers sirf bimari diagnose karte hain par doctor ka appointment book nahi karate. Hamara system dono ko jodta hai — jisme <strong>24/7 AI Chatbot</strong> patient ke symptoms analyze karta hai, <strong>Emergency Red-Flags</strong> detect karta hai, sahi <strong>Doctor Specialist</strong> recommend karta hai, <strong>Conflict-Free Real-Time Booking</strong> karata hai, aur Doctor ko pehle se <strong>AI Clinical Summary</strong> bhejta hai."</em>
+    </div>
+
+    <div class="grid-3">
+      <div class="stat-box">
+        <div class="stat-number">12+</div>
+        <div class="stat-title">Doctor Specialties</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">&lt; 1.5 sec</div>
+        <div class="stat-title">AI Triage Speed</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">100%</div>
+        <div class="stat-title">No Double-Booking</div>
+      </div>
+    </div>
+
+    <h2>Hamare Project ki 4 Sabse Badi Khasiyat (Core USPs)</h2>
+    <ol>
+      <li><strong>AI Symptom Triage:</strong> Mareez ko apni bhasha me symptoms likhne hain, AI turant samajh leta hai.</li>
+      <li><strong>Emergency Bypass:</strong> Agar patient ko Heart Attack ya Stroke ke symptoms hain (jaise chest pain, slurred speech), toh routine booking rok kar turant <strong>Emergency Red Alert</strong> deta hai.</li>
+      <li><strong>Right Doctor Recommendation:</strong> Symptoms ke hisab se exact specialist (Cardiologist, Neurologist, Pulmonologist, etc.) filter karke deta hai.</li>
+      <li><strong>Doctor Pre-Consultation Summary:</strong> Doctor ko patient aane se pehle summary mil jaati hai, jisse OPD me 10 minute ka time bachta hai.</li>
+    </ol>
+
+    <!-- SECTION 2: MILESTONES BREAKDOWN -->
+    <h1>2. Teeno Milestones Me Kya-Kya Hua Hai? (Summary)</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:18%;">Milestone</th>
+          <th style="width:28%;">Kyu Kiya Gaya? (Objective)</th>
+          <th style="width:34%;">Isme Kya Kaam Kiya? (Work Done)</th>
+          <th style="width:20%;">Output / Deliverables</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Milestone 1</strong><br><span class="badge badge-primary">Market Study & Req</span></td>
+          <td>Existing systems ko study karna, gaps dhundhna aur project ke requirements tay karna.</td>
+          <td>
+            • Practo, Zocdoc, Ada Health, Babylon Health ka comparative study kiya.<br>
+            • 3 main market gaps identify kiye.<br>
+            • 5 Functional (FR) aur 4 Non-Functional (NFR) requirements banaye.
+          </td>
+          <td>
+            • Comparative Matrix<br>
+            • Problem Statement<br>
+            • SRS Document
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Milestone 2</strong><br><span class="badge badge-success">Dataset & AI Engine</span></td>
+          <td>Medical dataset banana, clean karna, EDA karna aur AI Recommendation Engine code karna.</td>
+          <td>
+            • Columbia University, Mayo Clinic, ICD-10 se medical dataset banaya.<br>
+            • 6-stage data preprocessing pipeline banayi (cleaning, tokenizing).<br>
+            • 2-Tier AI Triage algorithm code kiya (Emergency Check + Jaccard Similarity).
+          </td>
+          <td>
+            • <code>symptom_specialist_dataset.csv</code><br>
+            • <code>ai_engine.py</code> module<br>
+            • EDA Analysis
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Milestone 3</strong><br><span class="badge badge-warning">System Architecture</span></td>
+          <td>Full-stack system architecture, 8 functional modules, database ER schema aur auth flows design karna.</td>
+          <td>
+            • 4-tier decoupled architecture banayi.<br>
+            • 8 Core modules define kiye (Auth, Chatbot, AI, Doctor Directory, Booking, etc.).<br>
+            • 3NF relational DB schema banaya (SQLAlchemy).<br>
+            • Google OAuth 2.0 (GIS) + JWT token security design ki.
+          </td>
+          <td>
+            • Architecture Diagram<br>
+            • Relational ER Schema<br>
+            • REST API Endpoints<br>
+            • Security & Disclaimers
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- SECTION 3: MILESTONE 1 DETAIL -->
+    <h1>3. Milestone 1 Detail: Existing Systems vs Hamara System</h1>
+
+    <h2>3.1 Existing Platforms me Kya Kami Thi? (Gap Analysis)</h2>
+    <ul>
+      <li><strong>Practo / Zocdoc:</strong> Doctor directory achhi hai, booking bhi hoti hai, par <strong>AI Symptom Checker nahi hai</strong>. Patient ko khud guess karna padta hai ki kis specialist ke paas jaaye.</li>
+      <li><strong>Ada Health / Buoy Health:</strong> AI symptom checker bohot achha hai, par <strong>Doctor appointment booking nahi hai</strong>. Diagnosis dekh kar user ko doosre app me jaana padta hai.</li>
+      <li><strong>Hamara System:</strong> Dono ko ek single platform me seamlessly jod diya hai!</li>
+    </ul>
+
+    <h2>3.2 Functional Requirements (FR) & Non-Functional Requirements (NFR)</h2>
+    <div class="grid-2">
+      <div class="highlight-card">
+        <strong>Functional Requirements (FR)</strong>
+        <ul>
+          <li><strong>FR-1:</strong> User Registration & Google Login (JWT).</li>
+          <li><strong>FR-2:</strong> AI Conversational Chatbot Drawer.</li>
+          <li><strong>FR-3:</strong> Automated Doctor Specialist Mapping.</li>
+          <li><strong>FR-4:</strong> Real-time Conflict-free Slot Booking.</li>
+          <li><strong>FR-5:</strong> Dual Dashboards (Patient + Doctor).</li>
+        </ul>
+      </div>
+      <div class="highlight-card">
+        <strong>Non-Functional Requirements (NFR)</strong>
+        <ul>
+          <li><strong>NFR-1 Security:</strong> AES-256 data at rest, TLS 1.3 in transit, Bcrypt password hashing.</li>
+          <li><strong>NFR-2 Performance:</strong> AI triage latency &lt; 1.5s, API booking &lt; 500ms.</li>
+          <li><strong>NFR-3 Usability:</strong> Responsive SPA UI across mobile & desktop.</li>
+          <li><strong>NFR-4 Safety:</strong> Medical disclaimer + ER emergency redirection.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SECTION 4: MILESTONE 2 DETAIL -->
+    <h1>4. Milestone 2 Detail: Dataset, Preprocessing & AI Engine</h1>
+
+    <h2>4.1 Data Cleaning Pipeline (6 Steps)</h2>
+    <pre>
+[Raw Clinical Data / User Input Text]
+       │
+       ▼  Step 1: UTF-8 Encoding Sanitization
+       ▼  Step 2: Null / Empty Records Removal
+       ▼  Step 3: Deduplication (Duplicate symptoms hataye)
+       ▼  Step 4: Clinical NLP Tokenization (Lowercase + Regex \w+)
+       ▼  Step 5: Medical Synonym Harmonization ("dyspnea" → "shortness of breath")
+       ▼  Step 6: Urgency Stratification (Emergency / High / Medium / Low)
+       │
+[Clean Knowledge Base in backend/data/symptom_specialist_dataset.csv]
+    </pre>
+
+    <h2>4.2 AI Algorithm Kaise Kaam Karta Hai? (Two-Tier Engine)</h2>
+    <div class="info-card">
+      <strong>Tier 1: Emergency Red-Flag Classifier (Pehle Check)</strong><br>
+      Emergency keywords: <code>["chest pain", "shortness of breath", "slurred speech", "numbness in face", "arm pain", "stroke", "heart attack", "unconscious", "difficulty breathing"]</code>.<br>
+      Agar user inme se kuch bhi bolta hai &rarr; System turant <strong>EMERGENCY RED ALERT</strong> deta hai aur normal booking cancel karke 112/108 helpline call karne ko kehta hai.
+    </div>
+
+    <div class="info-card">
+      <strong>Tier 2: Tokenized Jaccard Similarity Matcher (Specialist Recommendation)</strong><br>
+      Agar emergency nahi hai, toh user input tokens aur dataset symptoms ke tokens ka overlap (Jaccard Similarity) nikalte hain:
+      $$\text{Confidence} = \min\left(0.60 + (\text{Similarity} \times 0.35),\, 0.95\right)$$
+      <strong>Safe Default Routing:</strong> Agar similarity 15% se kam ho, toh safe side rehkar <strong>General Physician</strong> ko recommend kiya jaata hai (70% confidence).
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- SECTION 5: MILESTONE 3 DETAIL -->
+    <h1>5. Milestone 3 Detail: System Architecture, Modules & Tech Stack</h1>
+
+    <h2>5.1 Humne Kaunsi Technologies Use Ki Hain Aur Kyu?</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Technology</th>
+          <th>Stack Layer</th>
+          <th>Kyu Use Kiya? (Viva Reason)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>React 18 + Vite</strong></td>
+          <td>Frontend UI</td>
+          <td>Bohot fast load time, reusable components (Chatbot Drawer, Slot Modal), smooth glassmorphism design.</td>
+        </tr>
+        <tr>
+          <td><strong>FastAPI (Python)</strong></td>
+          <td>Backend API</td>
+          <td>Asynchronous (`asyncio`) hone ki wajah se super-fast hai, Pydantic type safety deta hai, aur Swagger docs auto-generate karta hai.</td>
+        </tr>
+        <tr>
+          <td><strong>Python NLP Engine</strong></td>
+          <td>AI Triage</td>
+          <td>Fast execution (&lt; 50ms), zero external API cost/failure, deterministic emergency rules.</td>
+        </tr>
+        <tr>
+          <td><strong>SQLAlchemy + SQLite</strong></td>
+          <td>Database & ORM</td>
+          <td>Relational integrity (ACID transactions) taaki do log ek hi slot ko double book na kar sakein.</td>
+        </tr>
+        <tr>
+          <td><strong>Google OAuth 2.0 (GIS) + JWT</strong></td>
+          <td>Authentication</td>
+          <td>One-click secure Google Sign-In, stateless cryptographic JWT session tokens, Bcrypt password hashing.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>5.2 Project ke 8 Subsystem Modules</h2>
+    <div class="grid-2">
+      <div class="highlight-card">
+        <strong>1. Auth & Identity Service</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Google OAuth 2.0 GIS token verification, OTP verification, Bcrypt password hashing, JWT session tokens.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>2. AI Chatbot Drawer</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Interactive drawer jo right side se slide-in hota hai, conversational symptom intake ke liye.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>3. Clinical Assessment Engine</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">User ke text se disease aur urgency calculate karta hai, emergency detect karta hai.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>4. Doctor Recommendation Service</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Diagnosed specialty ke hisab se verified doctors filter karke show karta hai.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>5. Doctor Schedule Management</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">30-minute ke consultation slots maintain karta hai, real-time availability check karta hai.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>6. Appointment Booking Engine</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Atomic transaction booking karta hai taaki double-booking kabhi na ho sake.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>7. Patient Health Records</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Patient ki past booking history, reported symptoms aur AI diagnosis save rehta hai.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>8. Doctor Clinical Dashboard</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Doctor ko unke daily patients ki list aur AI-generated pre-consultation summary dikhata hai.</p>
+      </div>
+    </div>
+
+    <h2>5.3 Double-Booking Prevention Kaise Hoti Hai?</h2>
+    <p>Database me <code>(doctor_id, date, slot)</code> par <strong>Unique Constraint</strong> laga hai aur booking logic <strong>Atomic Transaction</strong> me chalti hai. Agar do patients ek hi waqt par same slot click karein, toh pehle wale ka book ho jaata hai aur doosre ko backend se <strong>HTTP 409 Conflict</strong> error milta hai, jisse UI me wo slot instantly disable ho jaata hai.</p>
+
+    <div class="page-break"></div>
+
+    <!-- SECTION 6: TOP VIVA QUESTIONS IN HINGLISH -->
+    <h1>6. Top 10 Viva Questions & Answers (Examiner ke Saamne Bolne ke Liye)</h1>
+
+    <div class="viva-box">
+      <div class="viva-q">Q1: Aapke project ka main objective kya hai?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> Hamara main objective hai ek aisa intelligent healthcare system banana jo patient ke symptoms sunkar AI ki madad se bimari aur emergency detect kare, sahi specialist doctor recommend kare, real-time me bina slot conflict ke booking karaye, aur doctor ko consultation se pehle ek structured clinical summary provide kare.
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q2: Milestone 1, Milestone 2 aur Milestone 3 me kya difference hai?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong>
+        <ul>
+          <li><strong>Milestone 1:</strong> Market study (Practo vs Ada Health), gap identification, aur Functional / Non-Functional Requirements define kiye.</li>
+          <li><strong>Milestone 2:</strong> Medical datasets collect kiye, 6-stage data preprocessing ki, aur 2-Tier AI Triage recommendation engine code kiya.</li>
+          <li><strong>Milestone 3:</strong> Full system architecture banayi, 8 functional modules design kiye, relational ER database banaya, aur Google OAuth 2.0 / JWT security integrate ki.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q3: Backend me Django ya Flask ke badle FastAPI kyu use kiya?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> FastAPI modern asynchronous framework hai jo Python ke <code>asyncio</code> par chalta hai. Ye Flask aur Django se 3x fast hai, isme Pydantic ki vajah se automatic request validation milti hai, aur API test karne ke liye Swagger UI documentation automatically ban jaati hai.
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q4: Agar patient ko heart attack ke symptoms hain toh AI kya karega?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> Hamara <strong>Tier 1 Emergency Classifier</strong> emergency keywords (jaise chest pain, left arm pain, breathlessness) ko detect karte hi normal clinic booking ko bypass kar deta hai aur screen par <strong>Emergency Red Alert</strong> dikhakar patient ko turant 112/108 helpline ya nearest hospital ER jaane ka instruction deta hai.
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q5: Agar patient ke symptoms kisi bhi specialist se match na karein toh kya hoga?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> System me ek <strong>Safe Default Fallback</strong> mechanism hai. Agar similarity score threshold (&le; 15%) se kam rehta hai, toh AI patient ko safely <strong>General Physician</strong> (Internal Medicine) recommend karta hai, jo standard medical protocol hai.
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q6: Google Sign-In authentication kaise kaam karta hai?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> Hum Google Identity Services (GIS) use karte hain. User jab Google button par click karta hai, toh Google frontend ko ek signed ID Token deta hai. Backend is token ko Google ke servers se verify karta hai, user ka profile save karta hai aur secure JWT session token return karta hai.
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q7: AI ke medical suggestions me legal ya safety risk ko kaise handle kiya hai?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong>
+        <ol>
+          <li>Har assessment ke saath statutory disclaimer aata hai ki ye preliminary AI triage hai, final diagnosis nahi.</li>
+          <li><strong>Doctor-in-the-Loop:</strong> AI sirf doctor ke liye pre-consultation summary draft karta hai, final check aur prescription doctor hi karta hai.</li>
+          <li>Critical emergency me instant ER redirect hota hai.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q8: Doctor ko is system se kya fayda hota hai?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> Doctor ko unke dashboard par har patient ka pre-consultation AI summary milta hai jisme reported symptoms, duration aur preliminary diagnosis pehle se likha hota hai. Isse doctor ka OPD me 5-10 minute ka repetitive time bachta hai aur wo seedha treatment par focus kar sakte hain.
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-note">
+      <strong>AI-Based Patient Appointment System</strong> • B.Tech IT Major Project • Lokendra Prajapati & Samyak Lariya
+    </div>
+
+  </div>
+
+</body>
+</html>

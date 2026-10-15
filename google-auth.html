@@ -321,7 +321,7 @@
     <!-- SECTION 1: OFFICIAL GOOGLE CLOUD OAUTH SIGN-IN (GSI) -->
     <div class="gsi-wrapper">
       <div id="g_id_onload"
-           data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+           data-client_id="651813805283-sqqgnuqa25q56gkl8l3ovgoeq0b9sqnq.apps.googleusercontent.com"
            data-context="signin"
            data-ux_mode="popup"
            data-callback="handleCredentialResponse"
@@ -391,11 +391,11 @@
         </div>
 
         <!-- Account 2: Doctor/Work Account -->
-        <div class="account-item" onclick="handleOneClickLogin('Dr. Rajesh Sharma', 'dr.rajesh.medicare@gmail.com', 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=120&auto=format&fit=crop&q=80')">
+        <div class="account-item" onclick="handleOneClickLogin('Dr. Deepankar Lahariya', 'dr.deepankar.lahariya@gmail.com', 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=120&auto=format&fit=crop&q=80')">
           <img class="account-avatar" src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=120&auto=format&fit=crop&q=80" alt="Avatar" />
           <div class="account-details">
-            <div class="account-name">Dr. Rajesh Sharma (Cardiologist)</div>
-            <div class="account-email">dr.rajesh.medicare@gmail.com</div>
+            <div class="account-name">Dr. Deepankar Lahariya (General Physician)</div>
+            <div class="account-email">dr.deepankar.lahariya@gmail.com</div>
           </div>
           <span style="color: #0b57d0; font-size: 0.85rem; font-weight: 600;">Sign in →</span>
         </div>
@@ -470,7 +470,7 @@
     updateRoleUI();
 
     // Client ID Initialization
-    let activeClientId = localStorage.getItem('medicare_google_client_id') || '921820491823-example.apps.googleusercontent.com';
+    let activeClientId = localStorage.getItem('medicare_google_client_id') || '651813805283-sqqgnuqa25q56gkl8l3ovgoeq0b9sqnq.apps.googleusercontent.com';
     const clientIdInput = document.getElementById('client-id-input');
     if (clientIdInput) clientIdInput.value = activeClientId;
 

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Milestones 1, 2 & 3 Comprehensive Viva Guide - AI-Based Patient Appointment System</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 16mm 14mm 16mm 14mm;
+    }
+    
+    @page :first {
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1e293b;
+      background-color: #ffffff;
+      line-height: 1.55;
+      font-size: 9.6pt;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    /* Cover Page Styling */
+    .cover-page {
+      height: 100vh;
+      min-height: 297mm;
+      background: linear-gradient(135deg, #091e3a 0%, #112d4e 50%, #008080 100%);
+      color: #ffffff;
+      padding: 38mm 20mm 25mm 20mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      page-break-after: always;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: rgba(0, 209, 178, 0.2);
+      border: 1px solid #00d1b2;
+      color: #00f2c3;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 9pt;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .cover-title {
+      font-size: 29pt;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      background: linear-gradient(to right, #ffffff, #a7f3d0, #6ee7b7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cover-subtitle {
+      font-size: 13pt;
+      font-weight: 400;
+      color: #cbd5e1;
+      margin-bottom: 25px;
+      border-left: 4px solid #00d1b2;
+      padding-left: 15px;
+      line-height: 1.4;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: auto;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meta-label {
+      font-size: 7.5pt;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94a3b8;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .meta-value {
+      font-size: 10pt;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .meta-value small {
+      font-weight: 400;
+      color: #cbd5e1;
+      font-size: 8.5pt;
+    }
+
+    .cover-footer {
+      margin-top: 25px;
+      font-size: 8pt;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 12px;
+    }
+
+    /* Content Layout */
+    .content-container {
+      padding-top: 8px;
+    }
+
+    h1, h2, h3, h4 {
+      color: #0f172a;
+      font-weight: 700;
+      page-break-after: avoid;
+    }
+
+    h1 {
+      font-size: 18pt;
+      border-bottom: 2px solid #008080;
+      padding-bottom: 6px;
+      margin-top: 22px;
+      margin-bottom: 12px;
+      color: #091e3a;
+      display: flex;
+      align-items: center;
+    }
+
+    h1::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 20px;
+      background: linear-gradient(to bottom, #008080, #00d1b2);
+      margin-right: 10px;
+      border-radius: 3px;
+    }
+
+    h2 {
+      font-size: 13pt;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      color: #1e3a8a;
+    }
+
+    h3 {
+      font-size: 10.5pt;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      color: #0f766e;
+    }
+
+    p {
+      margin-bottom: 9px;
+      text-align: justify;
+    }
+
+    /* Cards & Boxes */
+    .info-card {
+      background-color: #f8fafc;
+      border-left: 4px solid #008080;
+      border-radius: 0 8px 8px 0;
+      padding: 11px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .viva-box {
+      background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);
+      border: 1px solid #99f6e4;
+      border-left: 5px solid #0d9488;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      page-break-inside: avoid;
+    }
+
+    .viva-box .viva-q {
+      font-weight: 700;
+      color: #0f766e;
+      font-size: 10pt;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+    }
+
+    .viva-box .viva-q::before {
+      content: "🎯 VIVA Q: ";
+      font-weight: 800;
+      color: #0d9488;
+      margin-right: 6px;
+    }
+
+    .viva-box .viva-ans {
+      color: #1e293b;
+      font-size: 9.3pt;
+      line-height: 1.5;
+    }
+
+    .viva-highlight {
+      background-color: #fef08a;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    .highlight-card {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid #2563eb;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin: 10px 0;
+    }
+
+    .alert-card {
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      border-left: 4px solid #dc2626;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin: 10px 0;
+      color: #991b1b;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 16px 0;
+      font-size: 8.8pt;
+      page-break-inside: avoid;
+    }
+
+    th {
+      background-color: #0f172a;
+      color: #ffffff;
+      text-align: left;
+      padding: 7px 10px;
+      font-weight: 600;
+      font-size: 8.5pt;
+      letter-spacing: 0.3px;
+    }
+
+    td {
+      padding: 7px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 10px 0;
+      page-break-inside: avoid;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 10px 0;
+      page-break-inside: avoid;
+    }
+
+    .stat-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .stat-number {
+      font-size: 16pt;
+      font-weight: 800;
+      color: #008080;
+    }
+
+    .stat-title {
+      font-size: 8pt;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* Code & Diagrams */
+    pre, code {
+      font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
+    }
+
+    pre {
+      background-color: #0f172a;
+      color: #f8fafc;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 8pt;
+      line-height: 1.4;
+      overflow-x: auto;
+      margin: 10px 0;
+      page-break-inside: avoid;
+    }
+
+    code {
+      background-color: #f1f5f9;
+      color: #0f766e;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 8.5pt;
+    }
+
+    ul, ol {
+      margin-left: 18px;
+      margin-bottom: 10px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 7.5pt;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge-primary { background: #e0f2fe; color: #0369a1; }
+    .badge-success { background: #dcfce7; color: #15803d; }
+    .badge-danger { background: #fee2e2; color: #b91c1c; }
+    .badge-warning { background: #fef3c7; color: #b45309; }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 8pt;
+      color: #94a3b8;
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER PAGE -->
+  <div class="cover-page">
+    <div>
+      <span class="cover-badge">Academic Project Master Study Guide</span>
+      <h1 class="cover-title" style="border:none; margin:0; padding:0; display:block;">AI-Based Patient<br>Appointment System</h1>
+      <p class="cover-subtitle">Complete Viva & Evaluation Manual for Milestone 1, Milestone 2, and Milestone 3</p>
+    </div>
+
+    <div>
+      <div class="cover-meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Project Domain</span>
+          <span class="meta-value">Healthcare AI & Full-Stack Web App</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Technology Architecture</span>
+          <span class="meta-value">React 18 + FastAPI + Python NLP + SQLite</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Team Members / Authors</span>
+          <span class="meta-value">Lokendra Prajapati <small>(BTIT2603D03)</small><br>Samyak Lariya <small>(BTIT2603D05)</small></span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Academic Details</span>
+          <span class="meta-value">B.Tech Information Technology (B.Tech IT)<br><small>Academic Year: 2025-2026</small></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <span>AI-Based Patient Appointment System — Milestones 1, 2, 3 Master Viva Dossier</span>
+      <span>Confidential & Academic Submission</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: EXECUTIVE PROJECT OVERVIEW -->
+  <div class="content-container">
+    <h1>1. Project Overview & Quick Elevator Pitch</h1>
+    
+    <div class="info-card">
+      <strong>Project One-Liner for Viva:</strong><br>
+      <em>"Our project is an <strong>AI-Based Patient Appointment System</strong> that bridges the gap between medical symptom self-assessment and doctor appointment scheduling. It features a 24/7 conversational AI triage chatbot that analyzes patient symptoms, detects medical emergencies, recommends the exact medical specialist (Cardiologist, Neurologist, etc.), prevents double-booking through atomic scheduling, and provides doctors with AI-generated pre-consultation clinical summaries."</em>
+    </div>
+
+    <div class="grid-3">
+      <div class="stat-box">
+        <div class="stat-number">12+</div>
+        <div class="stat-title">Medical Specialties</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">&lt; 1.5s</div>
+        <div class="stat-title">AI Triage Latency</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">100%</div>
+        <div class="stat-title">Conflict-Free Slots</div>
+      </div>
+    </div>
+
+    <h2>High-Level Problem It Solves</h2>
+    <ul>
+      <li><strong>Patient Self-Diagnosis Problem:</strong> Patients often don't know which doctor to consult (e.g. visiting an Orthopedist for joint pain caused by Rheumatic fever or visiting a General Physician for acute neurological symptoms), leading to wasted appointments and delayed treatment.</li>
+      <li><strong>Disconnection in Current Apps:</strong> Apps like Practo/Zocdoc book appointments but don't do AI symptom diagnosis. Symptom checkers like Ada Health diagnose symptoms but don't book nearby doctors. Our system unifies both!</li>
+      <li><strong>Doctor Context Deficiency:</strong> Doctors currently spend 10–15 minutes asking basic preliminary questions. Our system generates a ready-to-read pre-consultation summary before the patient walks in.</li>
+      <li><strong>Emergency Overrides:</strong> Patients with acute life-threatening symptoms (heart attack, stroke) are immediately redirected to Emergency Services (ER) rather than booking normal clinic slots.</li>
+    </ul>
+
+    <!-- VIVA BOX -->
+    <div class="viva-box">
+      <div class="viva-q">How will you introduce the project to the examiner in 30 seconds?</div>
+      <div class="viva-ans">
+        <em>"Good morning Sir/Ma'am. Our project is an <strong>AI-Based Patient Appointment System</strong>. In existing platforms, patients either self-diagnose and choose the wrong doctor on booking apps like Practo, or they use symptom checkers like Ada Health without direct appointment booking. Our platform combines conversational AI symptom triage, emergency red-flag detection, automatic doctor-specialty recommendation, conflict-free real-time slot booking, and pre-consultation AI clinical summaries for doctors on a unified, secure dashboard."</em>
+      </div>
+    </div>
+
+    <!-- SECTION 2: MILESTONES SUMMARY MATRIX -->
+    <h1>2. Summary of Milestones (1, 2, and 3)</h1>
+    
+    <p>Here is what was accomplished across each milestone so far:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:18%;">Milestone</th>
+          <th style="width:27%;">Key Objective & Scope</th>
+          <th style="width:30%;">What Was Built / Done</th>
+          <th style="width:25%;">Key Deliverables / Tools</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Milestone 1</strong><br><span class="badge badge-primary">Study & Requirement</span></td>
+          <td>Literature review, comparative study of existing healthcare systems, gap analysis, FRs & NFRs.</td>
+          <td>
+            • Analyzed Practo, Zocdoc, Ada Health, Babylon Health, Buoy Health.<br>
+            • Identified 3 primary industry gaps.<br>
+            • Defined 5 Functional & 4 Non-Functional Requirements.
+          </td>
+          <td>
+            • Comparative Matrix Table<br>
+            • Problem Statement<br>
+            • Requirement Specification Document
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Milestone 2</strong><br><span class="badge badge-success">Data & AI Engine</span></td>
+          <td>Dataset collection, clinical preprocessing, exploratory data analysis (EDA), and 2-tier AI triage engine.</td>
+          <td>
+            • Curated symptom-disease-specialist knowledge base (CUMC, Mayo Clinic, ICD-10).<br>
+            • 6-stage data preprocessing pipeline (cleaning, tokenization, synonym mapping).<br>
+            • 2-Tier AI Engine (Emergency classifier + Jaccard similarity scoring).
+          </td>
+          <td>
+            • <code>symptom_specialist_dataset.csv</code><br>
+            • <code>ai_engine.py</code> backend module<br>
+            • EDA urgency & specialty distribution charts
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Milestone 3</strong><br><span class="badge badge-warning">System Architecture</span></td>
+          <td>Comprehensive system architecture, 8 functional subsystem modules, ER database design, security & API flows.</td>
+          <td>
+            • Designed 4-tier decoupled client-server architecture.<br>
+            • Decomposed 8 core modules (Auth, Chatbot, AI Triage, Doctor Directory, Booking, Records, Dashboards).<br>
+            • Built normalized 3NF Relational DB schema (SQLAlchemy).<br>
+            • Google OAuth 2.0 GIS + JWT + OTP integration.
+          </td>
+          <td>
+            • High-Level Architecture Diagram<br>
+            • ER Database Diagrams<br>
+            • REST API Endpoints Specs<br>
+            • Safety & Medical Disclaimers
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- SECTION 3: DEEP-DIVE MILESTONE 1 -->
+    <h1>3. Deep-Dive: Milestone 1 (Existing Systems & Gap Analysis)</h1>
+    
+    <h2>3.1 Comparative Analysis Table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>System</th>
+          <th>Category</th>
+          <th>AI Capabilities</th>
+          <th>Key Strength</th>
+          <th>Major Limitation / Gap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Practo</strong></td>
+          <td>Doctor Booking</td>
+          <td>Minimal (Keyword search)</td>
+          <td>Large doctor network</td>
+          <td>Patients must self-diagnose doctor specialty.</td>
+        </tr>
+        <tr>
+          <td><strong>Zocdoc</strong></td>
+          <td>Doctor Discovery</td>
+          <td>Basic NLP search</td>
+          <td>Real-time calendar UI</td>
+          <td>No symptom triage; user needs prior medical awareness.</td>
+        </tr>
+        <tr>
+          <td><strong>Ada Health</strong></td>
+          <td>AI Symptom Triage</td>
+          <td>High (Bayesian Network)</td>
+          <td>Deep symptom assessment</td>
+          <td><strong>No appointment booking</strong> or doctor directory.</td>
+        </tr>
+        <tr>
+          <td><strong>Babylon Health</strong></td>
+          <td>Telehealth & Triage</td>
+          <td>High (NLP + Rules)</td>
+          <td>Combines chat & video</td>
+          <td>High operational complexity; no local clinic slot locks.</td>
+        </tr>
+        <tr>
+          <td><strong>Buoy Health</strong></td>
+          <td>Navigation Care</td>
+          <td>Moderate-High</td>
+          <td>ER vs Routine triage</td>
+          <td>Fragmented third-party provider handoff.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3.2 Three Major Gaps Addressed</h2>
+    <ol>
+      <li><strong>Assessment-to-Booking Disconnect:</strong> Existing platforms excel at <em>either</em> symptom assessment (Ada) <em>or</em> booking (Practo), but do not unite them.</li>
+      <li><strong>Self-Diagnosis Pitfall:</strong> Patients routinely book the wrong specialist, leading to delayed medical care and consultation cancellation.</li>
+      <li><strong>Doctor Context Void:</strong> Doctors start consultations with zero structured pre-consultation insights.</li>
+    </ol>
+
+    <h2>3.3 Requirements Formulation</h2>
+    <div class="grid-2">
+      <div class="highlight-card">
+        <strong>Functional Requirements (FR)</strong>
+        <ul style="margin-top:4px;">
+          <li><strong>FR-1:</strong> Patient & Doctor Auth (Google OAuth, JWT, OTP)</li>
+          <li><strong>FR-2:</strong> AI Symptom Chatbot Drawer</li>
+          <li><strong>FR-3:</strong> Smart Specialist Recommendation Engine</li>
+          <li><strong>FR-4:</strong> Real-time Conflict-Free Slot Booking</li>
+          <li><strong>FR-5:</strong> Dual Dashboards (Patient & Doctor)</li>
+        </ul>
+      </div>
+      <div class="highlight-card">
+        <strong>Non-Functional Requirements (NFR)</strong>
+        <ul style="margin-top:4px;">
+          <li><strong>NFR-1 Security:</strong> AES-256 data at rest, TLS 1.3 in transit, Bcrypt.</li>
+          <li><strong>NFR-2 Usability:</strong> Responsive SPA UI, sub-second responses.</li>
+          <li><strong>NFR-3 Performance:</strong> AI response &lt; 1.5s, API booking &lt; 500ms.</li>
+          <li><strong>NFR-4 Safety:</strong> Prominent clinical disclaimers & ER override.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- VIVA BOX -->
+    <div class="viva-box">
+      <div class="viva-q">Why not just use Practo or Google to search symptoms?</div>
+      <div class="viva-ans">
+        <em>"Searching symptoms on Google causes 'cyberchondria' (unnecessary panic) and often gives misleading suggestions. Practo requires the patient to know beforehand if they need an Endocrinologist, Neurologist, or Rheumatologist. Our system uses clinical token matching and red-flag rules to guide patients to the correct doctor safely in one continuous flow."</em>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- SECTION 4: DEEP-DIVE MILESTONE 2 -->
+    <h1>4. Deep-Dive: Milestone 2 (Data Collection, EDA & AI Engine)</h1>
+
+    <h2>4.1 Dataset Sourcing & Taxonomy</h2>
+    <p>The medical knowledge base was synthesized from authoritative clinical repositories: <strong>Columbia University Medical Center (CUMC) Disease-Symptom Knowledge Graph</strong>, <strong>Mayo Clinic & NHS Clinical Triage Rules</strong>, and <strong>ICD-10 Categorization Guidelines</strong>.</p>
+
+    <h2>4.2 6-Stage Data Preprocessing Pipeline</h2>
+    <pre>
+[Raw Clinical Symptom Data & User Input Text]
+       │
+       ▼  Step 1: UTF-8 Encoding & Ingestion Sanitization
+       ▼  Step 2: Null / Incomplete Record Pruning
+       ▼  Step 3: Deduplication & Semantic Redundancy Removal
+       ▼  Step 4: Clinical NLP Tokenization & Lowercasing (Regex \w+)
+       ▼  Step 5: Medical Synonym Harmonization (e.g., "dyspnea" → "shortness of breath")
+       ▼  Step 6: Categorical Severity Stratification (Emergency / High / Med / Low)
+       │
+[Validated Clinical Knowledge Base -> Fed into backend/app/services/ai_engine.py]
+    </pre>
+
+    <h2>4.3 The 2-Tier AI Recommendation Algorithm</h2>
+    <div class="info-card">
+      <strong>Tier 1: Emergency Classifier (Red-Flag Filter)</strong><br>
+      High-priority token set: <code>["chest pain", "shortness of breath", "slurred speech", "numbness in face", "arm pain", "stroke", "heart attack", "unconscious", "severe bleeding", "difficulty breathing"]</code>.<br>
+      If any emergency token is present &rarr; Triggers instant <strong>EMERGENCY WARNING</strong>, instructs the patient to call emergency services (112/108/911), and bypasses elective clinic booking for patient safety.
+    </div>
+
+    <div class="info-card">
+      <strong>Tier 2: Tokenized Jaccard Similarity Matcher & Confidence Calculation</strong><br>
+      For non-emergency inputs, the AI engine tokenizes the user input tokens $U$ and dataset symptom tokens $S$:
+      $$\text{Similarity Score} = \frac{|U \cap S|}{\max(|S|, 1)}$$
+      $$\text{Confidence} = \min\left(0.60 + (\text{Similarity Score} \times 0.35),\, 0.95\right)$$
+      <strong>Safe Default Fallback:</strong> If similarity score across all 12 specialties is $\le 0.15$, it routes safely to a <strong>General Physician</strong> with baseline confidence of <strong>70%</strong>.
+    </div>
+
+    <h2>4.4 Medical Specialties & Urgency Stratification</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Specialty</th>
+          <th>Example Conditions Mapped</th>
+          <th>Urgency Tier</th>
+          <th>Emergency Flag</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Cardiologist</strong></td>
+          <td>Heart Attack, Angina / Arrhythmia</td>
+          <td><span class="badge badge-danger">High / Critical</span></td>
+          <td><code>True</code></td>
+        </tr>
+        <tr>
+          <td><strong>Neurologist</strong></td>
+          <td>Stroke, Migraine, Sciatica</td>
+          <td><span class="badge badge-danger">High (Stroke)</span> / <span class="badge badge-warning">Med</span></td>
+          <td><code>True (Stroke)</code></td>
+        </tr>
+        <tr>
+          <td><strong>Pulmonologist</strong></td>
+          <td>Asthma, Pneumonia, Bronchitis</td>
+          <td><span class="badge badge-warning">Medium</span></td>
+          <td><code>False</code></td>
+        </tr>
+        <tr>
+          <td><strong>Dermatologist</strong></td>
+          <td>Allergic Dermatitis, Eczema, Acne</td>
+          <td><span class="badge badge-primary">Low / Routine</span></td>
+          <td><code>False</code></td>
+        </tr>
+        <tr>
+          <td><strong>Orthopedist</strong></td>
+          <td>Osteoarthritis, Knee/Joint pain</td>
+          <td><span class="badge badge-warning">Medium</span></td>
+          <td><code>False</code></td>
+        </tr>
+        <tr>
+          <td><strong>Endocrinologist</strong></td>
+          <td>Diabetes Mellitus, Hypothyroidism</td>
+          <td><span class="badge badge-warning">Med</span> / <span class="badge badge-primary">Low</span></td>
+          <td><code>False</code></td>
+        </tr>
+        <tr>
+          <td><strong>General Surgeon</strong></td>
+          <td>Acute Appendicitis</td>
+          <td><span class="badge badge-danger">High</span></td>
+          <td><code>True</code></td>
+        </tr>
+        <tr>
+          <td><strong>ENT Specialist</strong></td>
+          <td>Otitis Media, Tonsillitis</td>
+          <td><span class="badge badge-primary">Low</span></td>
+          <td><code>False</code></td>
+        </tr>
+        <tr>
+          <td><strong>General Physician</strong></td>
+          <td>General Viral Fever, Body Aches, Fatigue</td>
+          <td><span class="badge badge-primary">Low / Med</span></td>
+          <td><code>False</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- VIVA BOX -->
+    <div class="viva-box">
+      <div class="viva-q">What algorithm did you use in Milestone 2 for symptom assessment?</div>
+      <div class="viva-ans">
+        <em>"We built a <strong>Two-Tier Hybrid AI Triage Engine</strong> in Python. Tier 1 executes deterministic emergency keyword detection (for red flags like chest pain or slurred speech) to immediately warn patients and redirect to emergency care. Tier 2 computes tokenized Jaccard similarity and overlap scoring against a normalized clinical knowledge base to recommend the exact specialist with confidence between 60% and 95%. It includes a safe fallback to General Physician if similarity is below threshold."</em>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- SECTION 5: DEEP-DIVE MILESTONE 3 -->
+    <h1>5. Deep-Dive: Milestone 3 (System Architecture & Module Design)</h1>
+
+    <h2>5.1 Technology Stack Selection & Rationale</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Selected Tech</th>
+          <th>Why We Chose It (Viva Explanation)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Frontend</strong></td>
+          <td><strong>React 18 + Vite / Modern SPA</strong></td>
+          <td>Sub-second load time, component modularity (ChatbotDrawer, AppointmentModal), responsive glassmorphism UI.</td>
+        </tr>
+        <tr>
+          <td><strong>Backend API</strong></td>
+          <td><strong>FastAPI (Python 3.10+)</strong></td>
+          <td>Async (`asyncio`) performance, automated Swagger/OpenAPI docs, native Pydantic v2 data validation.</td>
+        </tr>
+        <tr>
+          <td><strong>AI Triage</strong></td>
+          <td><strong>Python NLP Engine + Rules</strong></td>
+          <td>Fast execution (&lt; 50ms processing time), zero external API cost/failure, deterministic emergency safety.</td>
+        </tr>
+        <tr>
+          <td><strong>Database & ORM</strong></td>
+          <td><strong>SQLAlchemy ORM + SQLite / Postgres</strong></td>
+          <td>Relational integrity, foreign key cascading, ACID transactions preventing double-booking race conditions.</td>
+        </tr>
+        <tr>
+          <td><strong>Authentication</strong></td>
+          <td><strong>Google OAuth 2.0 (GIS) + JWT + Bcrypt</strong></td>
+          <td>One-click Google Sign-In with Google Identity Services, cryptographic JWT tokens, Bcrypt password hashing.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>5.2 4-Tier Decoupled System Architecture</h2>
+    <pre>
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                                    PRESENTATION TIER                                    │
+│   • Patient Portal UI        • AI Health Chatbot Drawer        • Doctor Clinical Portal │
+└────────────────────────────────────────────┬────────────────────────────────────────────┘
+                                             │ HTTPS / REST API (JSON)
+                                             ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                                 API GATEWAY & ROUTER TIER                               │
+│   • Auth Router (Google GIS, OTP, JWT)     • Appointment Engine (Atomic Slot Booking)   │
+│   • Doctor Discovery Controller            • Patient History & Clinical Records Handler │
+└──────────────────────┬─────────────────────────────────────────────┬────────────────────┘
+                       │                                             │
+                       ▼                                             ▼
+┌──────────────────────────────────────────────┐ ┌────────────────────────────────────────┐
+│             AI TRIAGE SUBSYSTEM              │ │         DATA PERSISTENCE TIER          │
+│ • Emergency Red-Flag Classifier              │ │ • Users & Auth Store (Patients/Docs)   │
+│ • Symptom Knowledge Base Matcher             │ │ • Doctor Profiles & Slot Schedules     │
+│ • Doctor Specialty Recommender               │ │ • Atomic Appointment Bookings          │
+│ • Pre-Consultation Summary Generator         │ │ • Clinical Audit Logs & OTP Store      │
+└──────────────────────────────────────────────┘ └────────────────────────────────────────┘
+    </pre>
+
+    <h2>5.3 The 8 Subsystem Modules</h2>
+    <div class="grid-2">
+      <div class="highlight-card">
+        <strong>1. Auth & Identity Service</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Google OAuth 2.0 GIS token verification, OTP generator (SMS/Email), Bcrypt password hashing, JWT access/refresh tokens.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>2. AI Chatbot Drawer</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Interactive drawer sliding in from the right, multi-turn conversational symptom intake, instant safety badge rendering.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>3. Clinical Assessment Engine</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Parses unstructured text, scores against 20+ disease clusters, detects emergency conditions, calculates confidence level.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>4. Doctor Recommendation Service</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Filters verified doctors matching the diagnosed specialty, sorted by rating, fees, and location proximity.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>5. Doctor Schedule Management</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Granular 30-minute consultation slots, dynamic availability checks, doctor leave handling.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>6. Appointment Booking Engine</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Atomic transaction booking, duplicate slot prevention, unique appointment tracking IDs.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>7. Patient Health Records</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Patient consultation history, symptoms logged, AI assessment history, active/past status.</p>
+      </div>
+      <div class="highlight-card">
+        <strong>8. Doctor Clinical Dashboard</strong>
+        <p style="font-size:8.5pt; margin-bottom:0;">Live queue of scheduled patients, AI-generated clinical pre-briefings, consultation status toggles.</p>
+      </div>
+    </div>
+
+    <h2>5.4 Database Entity-Relationship (ER) Design</h2>
+    <pre>
+    USERS (id, name, email, phone, role, password_hash, auth_provider)
+      │ 1
+      │
+      ├──< APPOINTMENTS (id, patient_id, doctor_id, date, slot, status, symptoms, ai_summary)
+      │      ▲
+      │ 1    │ N
+    DOCTOR_PROFILES (id, specialization, qualification, rating, fee, location, available_slots)
+    </pre>
+
+    <!-- VIVA BOX -->
+    <div class="viva-box">
+      <div class="viva-q">How does your system prevent two patients from booking the same doctor slot?</div>
+      <div class="viva-ans">
+        <em>"We enforce <strong>Atomic Slot Locking</strong> in the backend booking service and database constraints. When an appointment request is received, the backend checks for existing active appointments matching `(doctor_id, date, slot)`. If found, it rejects the duplicate transaction with an HTTP 409 Conflict error. In the UI, booked slots are dynamically disabled in real time."</em>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- SECTION 6: MASTER VIVA QUESTIONS & ANSWERS -->
+    <h1>6. Master Viva Questions & Answers (Top 15 Expected Questions)</h1>
+
+    <div class="viva-box">
+      <div class="viva-q">Q1: What is the main objective of your project?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> The main objective is to provide an end-to-end intelligent healthcare platform that uses AI to analyze patient symptoms, detect emergencies, recommend the right medical specialist, enable seamless real-time appointment booking without slot conflicts, and provide doctors with structured AI clinical summaries before consultation.
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q2: What is the difference between Milestone 1, 2, and 3?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong>
+        <ul>
+          <li><strong>Milestone 1:</strong> Problem definition, market study of existing systems (Practo, Ada), identifying research gaps, and writing Functional/Non-Functional Requirements.</li>
+          <li><strong>Milestone 2:</strong> Dataset collection from clinical taxonomies, 6-stage data preprocessing, exploratory data analysis (EDA), and creating the 2-tier AI triage engine.</li>
+          <li><strong>Milestone 3:</strong> Full system architecture, technology stack selection, 8-module decomposition, relational ER database modeling, and Google OAuth 2.0 / JWT security design.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q3: Which technologies are you using across the stack and why?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong>
+        <ul>
+          <li><strong>Frontend:</strong> React 18 + Vite for high performance, modular components, and responsive modern UI.</li>
+          <li><strong>Backend:</strong> FastAPI (Python) because it is asynchronous (`asyncio`), ultra-fast, has built-in Pydantic validation, and auto-generates Swagger API documentation.</li>
+          <li><strong>Database:</strong> SQLite for development and PostgreSQL for production with SQLAlchemy ORM for relational integrity.</li>
+          <li><strong>AI Engine:</strong> Custom Python NLP triage module using tokenized Jaccard similarity and deterministic red-flag emergency rule matching.</li>
+          <li><strong>Authentication:</strong> Google OAuth 2.0 (Google Identity Services) + JWT tokens + Bcrypt for password security.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q4: How does your AI triage handle medical emergencies?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> We have a dedicated <strong>Tier 1 Emergency Classifier</strong> that checks for critical red-flag keywords (such as severe chest pain, shortness of breath, slurred speech, sudden facial numbness). When detected, it immediately displays an <strong>Emergency Red Alert</strong> instructing the patient to call emergency services (112/108/911) or visit the nearest ER immediately, completely overriding elective clinic booking.
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q5: How does the AI calculate confidence for doctor recommendations?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> We calculate the token overlap (Jaccard similarity) between user symptom tokens and our validated clinical knowledge base. The confidence score is mapped dynamically between <strong>60% and 95%</strong>: $\text{Confidence} = \min(0.60 + (\text{Similarity} \times 0.35), 0.95)$. If the similarity is $\le 0.15$, it routes safely to a <strong>General Physician</strong> with 70% confidence.
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q6: What happens if the patient types symptoms that don't match any specialist?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> The system has a safe fallback mechanism. If no specific specialist matches above our threshold (&le; 15% similarity), the AI routes the patient to a <strong>General Physician</strong> (Internal Medicine), which is the standard medical protocol for non-specific symptoms.
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q7: How is patient safety and legal compliance addressed?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong>
+        <ol>
+          <li>Every AI assessment contains a statutory disclaimer: <em>"This is a preliminary AI triage assessment and does not constitute a definitive medical diagnosis or prescription."</em></li>
+          <li>Doctor-in-the-Loop: All AI assessments are provided to the doctor as a draft summary for clinical verification.</li>
+          <li>Data privacy: Encrypted transit (TLS) and rest (AES-256) with role-based access control (RBAC).</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q8: How does the Google Sign-In authentication work?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> We use <strong>Google Identity Services (GIS) OAuth 2.0</strong>. The frontend receives a signed Google ID credential (JWT) from Google and sends it to our backend endpoint <code>/api/auth/google</code>. The backend verifies the cryptographic signature with Google's public certificates, extracts the user's email, name, and profile, and creates/retrieves the user in our database while issuing our own secure JWT session token.
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q9: How do doctors benefit from your system?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong> Doctors get a dedicated <strong>Doctor Dashboard</strong> showing their daily appointment queue, patient details, and most importantly, an <strong>AI-generated pre-consultation summary</strong> of reported symptoms and urgency level. This saves 5–10 minutes of manual inquiry per patient and allows doctors to focus on clinical examination.
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q10: What are the future milestones (Milestones 4 & 5)?</div>
+      <div class="viva-ans">
+        <strong>Answer:</strong>
+        <ul>
+          <li><strong>Milestone 4:</strong> Complete frontend and backend implementation, interactive chatbot UI, slot booking modal, and doctor dashboard.</li>
+          <li><strong>Milestone 5:</strong> Comprehensive system testing, security audit, latency benchmarking, edge case validation, and final project deployment.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SUMMARY FOOTER -->
+    <div class="footer-note">
+      <strong>AI-Based Patient Appointment System</strong> • Prepared by Lokendra Prajapati & Samyak Lariya • B.Tech IT Major Project 2026
+    </div>
+
+  </div>
+
+</body>
+</html>
